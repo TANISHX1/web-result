@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Compression & Decompression Walkthrough</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              200: '#99f6e4',
+              300: '#5eead4',
+              400: '#2dd4bf',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a',
+            },
+            dark: {
+              800: '#1e293b',
+              900: '#0f172a',
+            },
+            light: {
+              50: '#fafafa',
+              100: '#f4f4f5',
+              200: '#e4e4e7',
+              300: '#d4d4d8',
+              400: '#a1a1aa',
+              500: '#71717a',
+              600: '#52525b',
+              700: '#3f3f46',
+              800: '#27272a',
+              900: '#18181b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .toggle-checkbox:checked {
+      right: 0;
+      border-color: #0d9488;
+    }
+    .toggle-checkbox:checked + .toggle-label {
+      background-color: #0d9488;
+    }
+    
+    /* Theme-specific styles */
+    .dark-mode {
+      background: linear-gradient(to bottom right, #0f172a, #1e293b);
+      color: #ffffff;
+    }
+    
+    .light-mode {
+      background: linear-gradient(to bottom right, #fafafa, #e4e4e7);
+      color: #27272a;
+    }
+    
+    /* Transition effects */
+    body, section, h1, h2, h3, p, div {
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-dark-900 to-dark-800 text-white font-sans min-h-screen dark:bg-gradient-to-br dark:from-dark-900 dark:to-dark-800 dark:text-white light:bg-gradient-to-br light:from-light-50 light:to-light-200 light:text-dark-900" id="page-body">
+  <div class="max-w-6xl mx-auto p-6 pt-10 space-y-12">
+    <!-- Theme Toggle -->
+    <div class="fixed top-6 right-6 z-10">
+      <div class="relative inline-block w-16 mr-2 align-middle select-none">
+        <input type="checkbox" name="toggle" id="themeToggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" />
+        <label for="themeToggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label>
+      </div>
+      <span class="text-sm text-white dark:text-white light:text-dark-900" id="mode-text">Dark Mode</span>
+    </div>
+
+    <!-- Header -->
+    <header class="text-center mb-12">
+      <div class="inline-block p-2 px-6 mb-4 bg-gradient-to-r from-primary-700 to-blue-700 rounded-lg shadow-lg transform -rotate-1">
+        <h1 class="text-4xl sm:text-5xl font-bold text-white tracking-tight">
+          COMPRESSION & DECOMPRESSION
+        </h1>
+      </div>
+      <p class="text-primary-300 text-xl mt-4"> Process Walkthrough</p>
+    </header>
+
+    <!-- Compression Section -->
+    <section class="bg-dark-800/50 rounded-2xl p-8 border border-primary-900/30 shadow-xl backdrop-blur-sm">
+      <div class="flex items-center mb-6">
+        <div class="w-12 h-12 bg-primary-600 rounded-full flex items-center justify-center mr-4 shadow-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-semibold text-primary-300">Compression Workflow</h2>
+      </div>
+
+      <!-- Execution Step -->
+      <div class="space-y-6 pl-4 border-l-2 border-primary-800/50">
+        <div class="transition-all duration-300 hover:scale-[1.01]">
+          <h3 class="text-xl font-medium text-primary-200 mb-3">Execution Step</h3>
+          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700">
+            <img src="images/compression_img/exection.png" alt="Execution Step" class="w-full">
+          </div>
+        </div>
+
+        <!-- File Input Path -->
+        <div class="transition-all duration-300 hover:scale-[1.01]">
+          <h3 class="text-xl font-medium text-primary-200 mb-3">File Input Path</h3>
+          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700">
+            <img src="images/compression_img/input.png" alt="Input Path" class="w-full">
+          </div>
+        </div>
+
+        <!-- File Output Path -->
+        <div class="transition-all duration-300 hover:scale-[1.01]">
+          <h3 class="text-xl font-medium text-primary-200 mb-3">File Output Path</h3>
+          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700">
+            <img src="images/compression_img/output.png" alt="Output Path" class="w-full">
+          </div>
+        </div>
+
+        <!-- Compression Process -->
+        <div class="transition-all duration-300 hover:scale-[1.01]">
+          <h3 class="text-xl font-medium text-primary-200 mb-3">Compression Process</h3>
+          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700">
+            <img src="images/compression_img/compression process.png" alt="Compression Process" class="w-full">
+          </div>
+        </div>
+
+        <!-- Compression Summary -->
+        <div class="transition-all duration-300 hover:scale-[1.01]">
+          <h3 class="text-xl font-medium text-primary-200 mb-3">Compression Summary</h3>
+          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700">
+            <img src="images/compression_img/compressionesum.png" alt="Compression Summary" class="w-full">
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div class="transition-all duration-300 hover:scale-[1.01]">
+          <h3 class="text-xl font-medium text-primary-200 mb-3">Result</h3>
+          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700">
+            <img src="images/compression_img/RESULT.png" alt="Compression Result" class="w-full">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Decompression Section -->
+    <section class="bg-dark-800/50 rounded-2xl p-8 border border-blue-900/30 shadow-xl backdrop-blur-sm">
+      <div class="flex items-center mb-6">
+        <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mr-4 shadow-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+          </svg>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-semibold text-blue-300">Decompression Workflow</h2>
+      </div>
+
+      <!-- Execution Step -->
+      <div class="space-y-6 pl-4 border-l-2 border-blue-800/50">
+        <div class="transition-all duration-300 hover:scale-[1.01]">
+          <h3 class="text-xl font-medium text-blue-200 mb-3">Execution Step</h3>
+          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700">
+            <img src="images/decompression_img/decompress.png" alt="Execution Step" class="w-full">
+          </div>
+        </div>
+
+        <!-- File Input Path -->
+        <div class="transition-all duration-300 hover:scale-[1.01]">
+          <h3 class="text-xl font-medium text-blue-200 mb-3">File Input Path</h3>
+          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700">
+            <img src="images/decompression_img/input.png" alt="Input Path" class="w-full">
+          </div>
+        </div>
+
+        <!-- File Output Path -->
+        <div class="transition-all duration-300 hover:scale-[1.01]">
+          <h3 class="text-xl font-medium text-blue-200 mb-3">File Output Path</h3>
+          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700">
+            <img src="images/decompression_img/output.png" alt="Output Path" class="w-full">
+          </div>
+        </div>
+
+        <!-- Decompression Process -->
+        <div class="transition-all duration-300 hover:scale-[1.01]">
+          <h3 class="text-xl font-medium text-blue-200 mb-3">Decompression Process</h3>
+          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700">
+            <img src="images/decompression_img/decompress process.png" alt="Decompression Process" class="w-full">
+          </div>
+        </div>
+
+        <!-- Decompression Summary -->
+        <div class="transition-all duration-300 hover:scale-[1.01]">
+          <h3 class="text-xl font-medium text-blue-200 mb-3">Decompression Summary</h3>
+          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700">
+            <img src="images/decompression_img/decompress resume.png" alt="Decompression Summary" class="w-full">
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div class="transition-all duration-300 hover:scale-[1.01]">
+          <h3 class="text-xl font-medium text-blue-200 mb-3">Result</h3>
+          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700">
+            <img src="images/decompression_img/OUTPUT.png" alt="Decompression Result" class="w-full">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center text-gray-400 py-8 dark:text-gray-400 light:text-gray-600">
+      <p>© 2025 Compression & Decompression Tool</p>
+    </footer>
+  </div>
+
+  <script>
+    // Theme switcher functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const bodyElement = document.getElementById('page-body');
+    const modeText = document.getElementById('mode-text');
+    
+    // Check for saved theme preference or use default (dark)
+    if (localStorage.getItem('theme') === 'light') {
+      setLightMode();
+    } else {
+      setDarkMode();
+    }
+    
+    // Theme toggle event listener
+    themeToggle.addEventListener('change', function() {
+      if (this.checked) {
+        setLightMode();
+      } else {
+        setDarkMode();
+      }
+    });
+    
+    function setDarkMode() {
+      bodyElement.classList.remove('light-mode');
+      bodyElement.classList.add('dark-mode');
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      
+      // Update all section backgrounds for dark mode
+      updateSectionStyles('dark');
+      
+      themeToggle.checked = false;
+      modeText.textContent = "Dark Mode";
+      localStorage.setItem('theme', 'dark');
+    }
+    
+    function setLightMode() {
+      bodyElement.classList.remove('dark-mode');
+      bodyElement.classList.add('light-mode');
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      
+      // Update all section backgrounds for light mode
+      updateSectionStyles('light');
+      
+      themeToggle.checked = true;
+      modeText.textContent = "Light Mode";
+      localStorage.setItem('theme', 'light');
+    }
+    
+    function updateSectionStyles(mode) {
+      const sections = document.querySelectorAll('section');
+      sections.forEach(section => {
+        if (mode === 'light') {
+          section.classList.remove('bg-dark-800/50');
+          section.classList.add('bg-light-200/70');
+          section.style.color = '#27272a'; // dark text for light mode
+        } else {
+          section.classList.remove('bg-light-200/70');
+          section.classList.add('bg-dark-800/50');
+          section.style.color = '#ffffff'; // light text for dark mode
+        }
+      });
+      
+      // Update headings
+      const headings = document.querySelectorAll('h3');
+      headings.forEach(heading => {
+        if (mode === 'light') {
+          heading.style.color = '#0f766e'; // primary color for light mode
+        } else {
+          heading.style.color = ''; // reset to default for dark mode
+        }
+      });
+      
+      // Update image containers
+      const imgContainers = document.querySelectorAll('.bg-dark-900\\/70');
+      imgContainers.forEach(container => {
+        if (mode === 'light') {
+          container.classList.remove('bg-dark-900/70', 'border-gray-700');
+          container.classList.add('bg-white/90', 'border-light-300');
+        } else {
+          container.classList.remove('bg-white/90', 'border-light-300');
+          container.classList.add('bg-dark-900/70', 'border-gray-700');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
