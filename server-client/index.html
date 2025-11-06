@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Advanced Echo Server — Showcase</title>
+  <meta name="description" content="Showcase of Advanced Echo Server — screenshots and brief info." />
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* small custom styles (kept minimal so Tailwind handles most) */
+    .glass {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .floating {
+      animation: floaty 6s ease-in-out infinite;
+    }
+    @keyframes floaty {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+      100% { transform: translateY(0); }
+    }
+    /* Modal image zoom transitions */
+    .modal-backdrop { background: rgba(0,0,0,0.7); }
+    /* small responsive image heights */
+    .img-h { height: 16rem; }
+    @media (min-width: 640px){ .img-h { height: 14rem; } }
+    @media (min-width: 1024px){ .img-h { height: 12rem; } }
+    /* subtle focus outline */
+    :focus { outline: 2px solid rgba(99,102,241,0.25); outline-offset: 2px; }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-slate-900 via-slate-950 to-black text-slate-100 antialiased">
+  <!-- Hero -->
+  <header class="py-14 px-6 sm:px-12 lg:px-20">
+    <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-start gap-8">
+      <div class="flex-1">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white">
+          Advanced Echo Server
+        </h1>
+        <p class="mt-4 text-slate-300 max-w-2xl text-lg">
+          A C-based multi-client echo/chat server with persistent per-client storage and message logs. Below are recorded runtime screenshots showing server & client interactions, storage layout, and logs.
+        </p>
+
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a id="githubBtn" target="_blank" rel="noopener noreferrer" href="https://github.com/TANISHX1/Server/tree/main/echo%20server" class="glass inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium hover:scale-[1.02] transition">
+            View on GitHub
+          </a>
+
+          <button id="downloadZip" class="inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium glass hover:scale-[1.02] transition">
+            Download Code
+          </button>
+
+          <a href="#gallery" class="inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium bg-indigo-600 hover:bg-indigo-500 transition">
+            See Screenshots
+          </a>
+        </div>
+      </div>
+
+      <div class="w-full lg:w-96 glass p-4 rounded-2xl floating shadow-lg">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-xs text-slate-300">Tech</div>
+            <div class="text-sm font-semibold">C • TCP Sockets • Linux (Fedora)</div>
+          </div>
+          <div class="text-right">
+            <div class="text-xs text-slate-300">Status</div>
+            <div class="text-sm font-semibold text-emerald-400">Demo-ready</div>
+          </div>
+        </div>
+        <div class="mt-4 text-sm text-slate-300">
+          Clients are identified with UUIDs and messages are persisted in per-client folders. The screenshots below show real terminal output and stored files.
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Gallery -->
+  <main class="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20">
+    <section id="gallery" class="pt-6 pb-16">
+      <h2 class="text-2xl font-semibold mb-4">Result Screenshots</h2>
+      <p class="text-slate-400 mb-6 max-w-3xl">Click any image to view larger. This gallery is static HTML + vanilla JS and works on GitHub Pages without build tools.</p>
+
+      <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+      <!-- Carousel small (below grid) -->
+      <div class="mt-10 glass rounded-xl p-4">
+        <div class="flex items-center justify-between">
+          <h3 class="font-semibold">Live Carousel</h3>
+          <div class="text-sm text-slate-300">Auto-play with manual controls</div>
+        </div>
+
+        <div class="mt-4 relative">
+          <button id="prev" class="absolute left-2 top-1/2 -translate-y-1/2 glass p-2 rounded-full z-10">◀</button>
+          <div id="carouselViewport" class="overflow-hidden rounded-lg">
+            <img id="carouselImage" src="" alt="carousel" class="w-full h-64 object-contain bg-black p-4" loading="lazy">
+          </div>
+          <button id="next" class="absolute right-2 top-1/2 -translate-y-1/2 glass p-2 rounded-full z-10">▶</button>
+        </div>
+
+        <div id="carouselDots" class="mt-3 flex items-center justify-center gap-2"></div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="about" class="pb-20">
+      <h2 class="text-2xl font-semibold mb-4">Key Features</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="glass p-4 rounded-lg">
+          <div class="text-sm font-semibold">Socket I/O</div>
+          <div class="mt-2 text-slate-300 text-sm">Select-based non-blocking multiplexing for multiple clients.</div>
+        </div>
+        <div class="glass p-4 rounded-lg">
+          <div class="text-sm font-semibold">Persistence</div>
+          <div class="mt-2 text-slate-300 text-sm">Messages and files stored per-client (UUID folders).</div>
+        </div>
+        <div class="glass p-4 rounded-lg">
+          <div class="text-sm font-semibold">Demo Ready</div>
+          <div class="mt-2 text-slate-300 text-sm">Screenshots show actual runtime terminal and storage layout.</div>
+        </div>
+        <div class="glass p-4 rounded-lg">
+          <div class="text-sm font-semibold">Portable</div>
+          <div class="mt-2 text-slate-300 text-sm">This site is static and easily hosted on GitHub Pages.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal for image preview -->
+  <div id="modal" class="fixed inset-0 hidden items-center justify-center z-50">
+    <div id="modalBackdrop" class="absolute inset-0 modal-backdrop"></div>
+    <div class="relative max-w-4xl w-full mx-4">
+      <button id="closeModal" class="absolute right-2 top-2 glass p-2 rounded-md z-20">✕</button>
+      <img id="modalImg" src="" alt="preview" class="w-full max-h-[80vh] object-contain rounded-lg shadow-2xl bg-black p-4">
+      <div class="mt-3 flex justify-between items-center text-sm text-slate-300">
+        <div id="modalCaption"></div>
+        <a id="openInNew" target="_blank" rel="noopener noreferrer" class="glass px-3 py-1 rounded-md">Open original</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="border-t border-slate-800 py-8 mt-12 text-center text-slate-400">
+    © 2025 Tanish Shivhare — Advanced Echo Server
+  </footer>
+
+  <script>
+    /* === CONFIG: change these file names to match your repo img/ folder ===
+       Put your screenshots inside repo folder `img/` and name them accordingly.
+       Example filenames used below: "1.png", "2.png", ... or set your own names.
+    */
+    const IMAGES = [
+      'img/1.png',
+      'img/2.png',
+      'img/3.png',
+      'img/4.png',
+      'img/5.png'
+    ];
+
+    // --------- Grid gallery render ----------
+    const grid = document.getElementById('grid');
+
+    function makeCard(src, idx) {
+      const wrap = document.createElement('div');
+      wrap.className = 'rounded-xl overflow-hidden shadow-lg border border-slate-800 cursor-pointer glass transition-transform transform hover:scale-105';
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = `screenshot-${idx+1}`;
+      img.loading = 'lazy';
+      img.className = 'w-full object-cover img-h';
+      // handle error if image missing
+      img.onerror = () => {
+        img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450"><rect width="100%" height="100%" fill="#0f172a"/><text x="50%" y="50%" font-size="20" fill="#94a3b8" text-anchor="middle" dominant-baseline="middle">Image not found<br>${src}</text></svg>`);
+      };
+      wrap.appendChild(img);
+
+      // caption overlay
+      const cap = document.createElement('div');
+      cap.className = 'p-3';
+      cap.innerHTML = `<div class="text-sm font-medium">Screenshot ${idx+1}</div><div class="text-xs text-slate-400 mt-1">Click to view larger</div>`;
+      wrap.appendChild(cap);
+
+      // click -> open modal
+      wrap.addEventListener('click', () => openModal(src, idx));
+      return wrap;
+    }
+
+    IMAGES.forEach((s, i) => grid.appendChild(makeCard(s, i)));
+
+    // --------- Modal logic ----------
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modalImg');
+    const modalCaption = document.getElementById('modalCaption');
+    const openInNew = document.getElementById('openInNew');
+
+    function openModal(src, idx) {
+      modalImg.src = src;
+      modalCaption.textContent = `Screenshot ${idx+1}`;
+      openInNew.href = src;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+      modalImg.src = '';
+    }
+
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    document.getElementById('modalBackdrop').addEventListener('click', closeModal);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // --------- Carousel logic ----------
+    const carouselImg = document.getElementById('carouselImage');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const dots = document.getElementById('carouselDots');
+
+    let idx = 0;
+    let autoplay = true;
+    let timer = null;
+
+    function renderCarousel(i) {
+      idx = (i + IMAGES.length) % IMAGES.length;
+      carouselImg.src = IMAGES[idx];
+      // dots
+      dots.innerHTML = '';
+      IMAGES.forEach((_, j) => {
+        const d = document.createElement('button');
+        d.className = 'w-2 h-2 rounded-full ' + (j === idx ? 'bg-indigo-400' : 'bg-white/30');
+        d.addEventListener('click', () => {
+          renderCarousel(j); resetTimer();
+        });
+        dots.appendChild(d);
+      });
+    }
+
+    function prev() { renderCarousel(idx - 1); resetTimer(); }
+    function next() { renderCarousel(idx + 1); resetTimer(); }
+
+    prevBtn.addEventListener('click', prev);
+    nextBtn.addEventListener('click', next);
+
+    function resetTimer() {
+      if (timer) clearInterval(timer);
+      if (autoplay) timer = setInterval(() => renderCarousel(idx + 1), 3500);
+    }
+
+    // start
+    if (IMAGES.length > 0) {
+      renderCarousel(0);
+      resetTimer();
+    } else {
+      carouselImg.alt = 'No images';
+    }
+
+    // --------- Optional: Download zip of repo (simple fallback link) ----------
+    // This button will redirect to the GitHub repo zip download. If you'd like a packaged
+    // zip inside the repo, update the link to point directly to it.
+    const downloadBtn = document.getElementById('downloadZip');
+    downloadBtn.addEventListener('click', () => {
+      // replace <username> and <repo> if you want direct zip link
+      const zipUrl = 'https://github.com/TANISHX1/Server/archive/refs/heads/main.zip';
+      window.open(zipUrl, '_blank', 'noopener');
+    });
+
+    // Accessibility: keyboard navigation for gallery (left/right for carousel)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') prev();
+      if (e.key === 'ArrowRight') next();
+    });
+
+    // small defensive: if images folder path is different, user can set IMAGES variable above.
+  </script>
+</body>
+</html>
