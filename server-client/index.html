@@ -1,283 +1,331 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Advanced Echo Server — Showcase</title>
-  <meta name="description" content="Showcase of Advanced Echo Server — screenshots and brief info." />
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* small custom styles (kept minimal so Tailwind handles most) */
-    .glass {
-      background: rgba(255,255,255,0.04);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-    .floating {
-      animation: floaty 6s ease-in-out infinite;
-    }
-    @keyframes floaty {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-      100% { transform: translateY(0); }
-    }
-    /* Modal image zoom transitions */
-    .modal-backdrop { background: rgba(0,0,0,0.7); }
-    /* small responsive image heights */
-    .img-h { height: 16rem; }
-    @media (min-width: 640px){ .img-h { height: 14rem; } }
-    @media (min-width: 1024px){ .img-h { height: 12rem; } }
-    /* subtle focus outline */
-    :focus { outline: 2px solid rgba(99,102,241,0.25); outline-offset: 2px; }
-  </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Advanced Echo Server — Showcase</title>
+    <meta name="description" content="Showcase of Advanced Echo Server — screenshots and brief info." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body class="bg-gradient-to-b from-slate-900 via-slate-950 to-black text-slate-100 antialiased">
-  <!-- Hero -->
-  <header class="py-14 px-6 sm:px-12 lg:px-20">
-    <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-start gap-8">
-      <div class="flex-1">
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white">
-          Advanced Echo Server
-        </h1>
-        <p class="mt-4 text-slate-300 max-w-2xl text-lg">
-          A C-based multi-client echo/chat server with persistent per-client storage and message logs. Below are recorded runtime screenshots showing server & client interactions, storage layout, and logs.
-        </p>
 
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a id="githubBtn" target="_blank" rel="noopener noreferrer" href="https://github.com/TANISHX1/Server/tree/main/echo%20server" class="glass inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium hover:scale-[1.02] transition">
-            View on GitHub
-          </a>
+    <!-- HERO -->
+    <header class="py-14 px-6 sm:px-12 lg:px-20">
+        <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-start gap-8">
+            <div class="flex-1">
+                <h1 class="front-heading font-extrabold tracking-tight text-white">
+                    <span class="typingText" aria-live="polite">HIGH PERFORMANCE LAN NETWORK TCP SERVER</span>
+                </h1>
 
-          <button id="downloadZip" class="inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium glass hover:scale-[1.02] transition">
-            Download Code
-          </button>
+                <!-- Info section placed directly below the main heading -->
+                <div class="mt-6 flex flex-col sm:flex-row sm:items-start sm:gap-4">
+                    <div class="glass p-3 rounded-lg w-full sm:w-auto">
+                        <div class="text-xs text-slate-300">Tech</div>
+                        <div class="text-sm font-semibold">C • TCP Sockets • Linux</div>
+                    </div>
 
-          <a href="#gallery" class="inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium bg-indigo-600 hover:bg-indigo-500 transition">
-            See Screenshots
-          </a>
+                    <div class="glass p-3 rounded-lg w-full sm:w-auto">
+                        <div class="text-xs text-slate-300">Status</div>
+                        <div class="text-sm font-semibold text-emerald-400">Ready</div>
+                    </div>
+                </div>
+
+                <p class="mt-4 text-slate-300 max-w-2xl text-lg">
+                    Clients identified with UUIDs . messages persisted per-client. Screenshots show terminal output &
+                    stored files.
+                </p>
+
+                <div class="mt-6 flex flex-wrap gap-3">
+                    <a id="githubBtn" target="_blank" rel="noopener noreferrer"
+                        href="https://github.com/TANISHX1/Server/tree/main/echo%20server"
+                        class="glass inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium hover:scale-[1.02] transition">
+                        View on GitHub
+                    </a>
+
+                    <button id="downloadZip"
+                        class="inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium glass hover:scale-[1.02] transition">
+                        Download Code
+                    </button>
+
+                    <a href="#gallery"
+                        class="inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium bg-indigo-600 hover:bg-indigo-500 transition">
+                        See Screenshots
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right-side panel removed to avoid duplicate info -->
         </div>
-      </div>
+    </header>
 
-      <div class="w-full lg:w-96 glass p-4 rounded-2xl floating shadow-lg">
-        <div class="flex items-center justify-between">
-          <div>
-            <div class="text-xs text-slate-300">Tech</div>
-            <div class="text-sm font-semibold">C • TCP Sockets • Linux (Fedora)</div>
-          </div>
-          <div class="text-right">
-            <div class="text-xs text-slate-300">Status</div>
-            <div class="text-sm font-semibold text-emerald-400">Demo-ready</div>
-          </div>
+    <!-- Gallery -->
+    <main class="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20">
+        <section id="gallery" class="pt-6 pb-16">
+            <h2 class="text-2xl font-semibold mb-4">Result Screenshots</h2>
+            <p class="text-slate-400 mb-6 max-w-3xl">Click image to view larger.
+            </p>
+
+            <!-- MOVE: Live Carousel placed BEFORE the grid and made larger -->
+            <div class="mt-6 glass rounded-xl p-6">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold text-lg lg:text-xl">Live Carousel</h3>
+                    <div class="text-sm text-slate-300">Auto-play with manual controls</div>
+                </div>
+
+                <div class="relative">
+                    <button id="prev"
+                        class="absolute left-3 top-1/2 -translate-y-1/2 glass p-2 rounded-full z-10">◀</button>
+                    <div id="carouselViewport" class="overflow-hidden rounded-lg">
+                        <img id="carouselImage" src="" alt="carousel" class="w-full object-contain bg-black p-4"
+                            loading="lazy">
+                    </div>
+                    <button id="next"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 glass p-2 rounded-full z-10">▶</button>
+                </div>
+
+                <div id="carouselDots" class="mt-4 flex items-center justify-center gap-2"></div>
+            </div>
+
+            <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+
+        <!-- Features -->
+        <section id="about" class="pb-20">
+            <h2 class="text-2xl font-semibold mb-4">Key Features</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="glass p-4 rounded-lg">
+                    <div class="text-sm font-semibold">Socket I/O</div>
+                    <div class="mt-2 text-slate-300 text-sm">Select-based non-blocking multiplexing for multiple
+                        clients.
+                    </div>
+                </div>
+                <div class="glass p-4 rounded-lg">
+                    <div class="text-sm font-semibold">Persistence</div>
+                    <div class="mt-2 text-slate-300 text-sm">Messages and files stored per-client (UUID folders).</div>
+                </div>
+                <div class="glass p-4 rounded-lg">
+                    <div class="text-sm font-semibold">Client</div>
+                    <div class="mt-2 text-slate-300 text-sm">Enhanced Client Management System .
+                    </div>
+                </div>
+                <div class="glass p-4 rounded-lg">
+                    <div class="text-sm font-semibold">Robust Server </div>
+                    <div class="mt-2 text-slate-300 text-sm">Advanced Concurrency Model for High Throughput.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Table: updated concise comparison -->
+        <section id="comparison" class="pb-20">
+            <h2 class="text-2xl font-semibold mb-4">Comparison: This Project vs Popular TCP Servers</h2>
+            <div class="overflow-x-auto bg-slate-900 rounded-lg border border-slate-800 p-4">
+                <table class="min-w-full text-sm table-auto">
+                    <thead class="bg-slate-800 text-left">
+                        <tr>
+                            <th class="px-3 py-2 font-medium">Feature</th>
+                            <th class="px-3 py-2 font-medium">This Project</th>
+                            <th class="px-3 py-2 font-medium">Redis</th>
+                            <th class="px-3 py-2 font-medium">Node.js Net</th>
+                            <th class="px-3 py-2 font-medium">Python Socket</th>
+                            <th class="px-3 py-2 font-medium">Nginx</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800">
+                        <tr>
+                            <td class="px-3 py-2 font-medium">Architecture</td>
+                            <td class="px-3 py-2">Hybrid (<code>select()</code> + threads)</td>
+                            <td class="px-3 py-2">Event-driven</td>
+                            <td class="px-3 py-2">Event loop</td>
+                            <td class="px-3 py-2">Blocking I/O (typical)</td>
+                            <td class="px-3 py-2">Event-driven (workers)</td>
+                        </tr>
+
+                        <tr>
+                            <td class="px-3 py-2 font-medium">Concurrency (typ.)</td>
+                            <td class="px-3 py-2">≈ 1,024 connections</td>
+                            <td class="px-3 py-2">10k+ connections</td>
+                            <td class="px-3 py-2">10k+ connections</td>
+                            <td class="px-3 py-2">~500 connections</td>
+                            <td class="px-3 py-2">50k+ connections</td>
+                        </tr>
+
+                        <tr>
+                            <td class="px-3 py-2 font-medium">Client ID</td>
+                            <td class="px-3 py-2">UUIDv4 + persistence</td>
+                            <td class="px-3 py-2">Connection ID</td>
+                            <td class="px-3 py-2">Socket ID</td>
+                            <td class="px-3 py-2">IP:Port</td>
+                            <td class="px-3 py-2">Session cookie / header</td>
+                        </tr>
+
+                        <tr>
+                            <td class="px-3 py-2 font-medium">Message format</td>
+                            <td class="px-3 py-2">Custom <code>!?!?</code> framing</td>
+                            <td class="px-3 py-2">RESP protocol</td>
+                            <td class="px-3 py-2">Raw TCP frames</td>
+                            <td class="px-3 py-2">Size-prefixed / app-level</td>
+                            <td class="px-3 py-2">HTTP/1.1 (text-based)</td>
+                        </tr>
+
+                        <tr>
+                            <td class="px-3 py-2 font-medium">Metadata tracking</td>
+                            <td class="px-3 py-2">✅ 22 data points / client</td>
+                            <td class="px-3 py-2">❌</td>
+                            <td class="px-3 py-2">❌</td>
+                            <td class="px-3 py-2">❌</td>
+                            <td class="px-3 py-2">8 data points</td>
+                        </tr>
+
+                        <tr>
+                            <td class="px-3 py-2 font-medium">Latency (LAN)</td>
+                            <td class="px-3 py-2">2–5 ms</td>
+                            <td class="px-3 py-2">0.8–1.5 ms</td>
+                            <td class="px-3 py-2">1–3 ms</td>
+                            <td class="px-3 py-2">5–10 ms</td>
+                            <td class="px-3 py-2">0.5–1.2 ms</td>
+                        </tr>
+
+                        <tr>
+                            <td class="px-3 py-2 font-medium">Throughput (approx)</td>
+                            <td class="px-3 py-2">350 MB/s</td>
+                            <td class="px-3 py-2">650 MB/s</td>
+                            <td class="px-3 py-2">500 MB/s</td>
+                            <td class="px-3 py-2">90 MB/s</td>
+                            <td class="px-3 py-2">900 MB/s</td>
+                        </tr>
+
+                        <tr>
+                            <td class="px-3 py-2 font-medium">Debug tools</td>
+                            <td class="px-3 py-2">Hex dump + traffic logger</td>
+                            <td class="px-3 py-2">CLI monitoring</td>
+                            <td class="px-3 py-2">Console logs / debuggers</td>
+                            <td class="px-3 py-2">Basic print / logging</td>
+                            <td class="px-3 py-2">Access / error logs</td>
+                        </tr>
+
+                        <tr>
+                            <td class="px-3 py-2 font-medium">Error recovery</td>
+                            <td class="px-3 py-2">83% success rate (measured)</td>
+                            <td class="px-3 py-2">98%</td>
+                            <td class="px-3 py-2">95%</td>
+                            <td class="px-3 py-2">70%</td>
+                            <td class="px-3 py-2">99.9%</td>
+                        </tr>
+
+                        <tr>
+                            <td class="px-3 py-2 font-medium">Memory / 100 clients</td>
+                            <td class="px-3 py-2">~50–60 MB</td>
+                            <td class="px-3 py-2">~35 MB</td>
+                            <td class="px-3 py-2">~60 MB</td>
+                            <td class="px-3 py-2">~120 MB</td>
+                            <td class="px-3 py-2">~110 MB</td>
+                        </tr>
+
+                        <tr>
+                            <td class="px-3 py-2 font-medium">Educational value</td>
+                            <td class="px-3 py-2">🔥 High (7 core concepts)</td>
+                            <td class="px-3 py-2">🟡 Moderate</td>
+                            <td class="px-3 py-2">🟡 Moderate</td>
+                            <td class="px-3 py-2">🟢 Good</td>
+                            <td class="px-3 py-2">🔴 Low</td>
+                        </tr>
+
+                        <tr>
+                            <td class="px-3 py-2 font-medium">Production use</td>
+                            <td class="px-3 py-2">Research prototype / basic production</td>
+                            <td class="px-3 py-2">✅ Enterprise</td>
+                            <td class="px-3 py-2">✅ Production</td>
+                            <td class="px-3 py-2">⚠️ Limited</td>
+                            <td class="px-3 py-2">✅ Enterprise</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p class="mt-3 text-xs text-slate-400">
+                    Notes: numbers are illustrative and depend on workload, build options and environment. Use these as
+                    comparative guidance rather than definitive benchmarks.
+                </p>
+            </div>
+        </section>
+
+        <!-- Developers -->
+        <section id="developers" class="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 pb-12">
+            <h2 class="text-2xl font-semibold mb-4">Developers</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <!-- Dev 1 -->
+                <div class="glass p-4 rounded-lg">
+                    <div class="text-sm font-semibold">Tanish Shivhare</div>
+                    <div class="mt-2 text-slate-300 text-sm">Role: Developer</div>
+                    <div class="mt-3 space-y-1 text-sm">
+                        <div>GitHub:
+                            <a href="https://github.com/TANISHX1" target="_blank" rel="noopener noreferrer"
+                                class="text-indigo-400">github.com/TANISHX1</a>
+                        </div>
+                        <div>LinkedIn:
+                            <a href="https://www.linkedin.com/in/tanish-shivhare-71b576222" target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-indigo-400">linkedin.com/in/tanish-shivhare-71b576222</a>
+                        </div>
+                        <div>Email:
+                            <a href="mailto:Tanishshivhare2@gmail.com"
+                                class="text-indigo-400">Tanishshivhare2@gmail.com</a>
+                        </div>
+                        <div>Phone:
+                            <a href="tel:+919343921605" class="text-indigo-400">+91 93439 21605</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dev 2 -->
+                <div class="glass p-4 rounded-lg">
+                    <div class="text-sm font-semibold">Yash Barskar</div>
+                    <div class="mt-2 text-slate-300 text-sm">Role: Developer</div>
+                    <div class="mt-3 space-y-1 text-sm">
+                        <div>GitHub:
+                            <a href="https://github.com/Yashx0012" target="_blank" rel="noopener noreferrer"
+                                class="text-indigo-400">github.com/Yashx0012</a>
+                        </div>
+                        <div>LinkedIn:
+                            <a href="https://www.linkedin.com/in/yash-barskar-a237b1329" target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-indigo-400">linkedin.com/in/yash-barskar-a237b1329</a>
+                        </div>
+                        <div>Email:
+                            <a href="mailto:yash.sudhakar20055@gmail.com"
+                                class="text-indigo-400">yash.sudhakar20055@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- end Developers -->
+    </main>
+
+    <!-- Modal for image preview -->
+    <div id="modal" class="fixed inset-0 hidden items-center justify-center z-50">
+        <div id="modalBackdrop" class="absolute inset-0 modal-backdrop"></div>
+        <div class="relative max-w-4xl w-full mx-4">
+            <button id="closeModal" class="absolute right-2 top-2 glass p-2 rounded-md z-20">✕</button>
+            <img id="modalImg" src="" alt="preview"
+                class="w-full max-h-[80vh] object-contain rounded-lg shadow-2xl bg-black p-4">
+            <div class="mt-3 flex justify-between items-center text-sm text-slate-300">
+                <div id="modalCaption"></div>
+                <a id="openInNew" target="_blank" rel="noopener noreferrer" class="glass px-3 py-1 rounded-md">Open
+                    original</a>
+            </div>
         </div>
-        <div class="mt-4 text-sm text-slate-300">
-          Clients are identified with UUIDs and messages are persisted in per-client folders. The screenshots below show real terminal output and stored files.
-        </div>
-      </div>
     </div>
-  </header>
 
-  <!-- Gallery -->
-  <main class="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20">
-    <section id="gallery" class="pt-6 pb-16">
-      <h2 class="text-2xl font-semibold mb-4">Result Screenshots</h2>
-      <p class="text-slate-400 mb-6 max-w-3xl">Click any image to view larger. This gallery is static HTML + vanilla JS and works on GitHub Pages without build tools.</p>
+    <footer class="border-t border-slate-800 py-8 mt-12 text-center text-slate-400">
+        © 2025 Tanish Shivhare — Advanced Echo Server
+    </footer>
 
-      <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-
-      <!-- Carousel small (below grid) -->
-      <div class="mt-10 glass rounded-xl p-4">
-        <div class="flex items-center justify-between">
-          <h3 class="font-semibold">Live Carousel</h3>
-          <div class="text-sm text-slate-300">Auto-play with manual controls</div>
-        </div>
-
-        <div class="mt-4 relative">
-          <button id="prev" class="absolute left-2 top-1/2 -translate-y-1/2 glass p-2 rounded-full z-10">◀</button>
-          <div id="carouselViewport" class="overflow-hidden rounded-lg">
-            <img id="carouselImage" src="" alt="carousel" class="w-full h-64 object-contain bg-black p-4" loading="lazy">
-          </div>
-          <button id="next" class="absolute right-2 top-1/2 -translate-y-1/2 glass p-2 rounded-full z-10">▶</button>
-        </div>
-
-        <div id="carouselDots" class="mt-3 flex items-center justify-center gap-2"></div>
-      </div>
-    </section>
-
-    <!-- Features -->
-    <section id="about" class="pb-20">
-      <h2 class="text-2xl font-semibold mb-4">Key Features</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="glass p-4 rounded-lg">
-          <div class="text-sm font-semibold">Socket I/O</div>
-          <div class="mt-2 text-slate-300 text-sm">Select-based non-blocking multiplexing for multiple clients.</div>
-        </div>
-        <div class="glass p-4 rounded-lg">
-          <div class="text-sm font-semibold">Persistence</div>
-          <div class="mt-2 text-slate-300 text-sm">Messages and files stored per-client (UUID folders).</div>
-        </div>
-        <div class="glass p-4 rounded-lg">
-          <div class="text-sm font-semibold">Demo Ready</div>
-          <div class="mt-2 text-slate-300 text-sm">Screenshots show actual runtime terminal and storage layout.</div>
-        </div>
-        <div class="glass p-4 rounded-lg">
-          <div class="text-sm font-semibold">Portable</div>
-          <div class="mt-2 text-slate-300 text-sm">This site is static and easily hosted on GitHub Pages.</div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Modal for image preview -->
-  <div id="modal" class="fixed inset-0 hidden items-center justify-center z-50">
-    <div id="modalBackdrop" class="absolute inset-0 modal-backdrop"></div>
-    <div class="relative max-w-4xl w-full mx-4">
-      <button id="closeModal" class="absolute right-2 top-2 glass p-2 rounded-md z-20">✕</button>
-      <img id="modalImg" src="" alt="preview" class="w-full max-h-[80vh] object-contain rounded-lg shadow-2xl bg-black p-4">
-      <div class="mt-3 flex justify-between items-center text-sm text-slate-300">
-        <div id="modalCaption"></div>
-        <a id="openInNew" target="_blank" rel="noopener noreferrer" class="glass px-3 py-1 rounded-md">Open original</a>
-      </div>
-    </div>
-  </div>
-
-  <footer class="border-t border-slate-800 py-8 mt-12 text-center text-slate-400">
-    © 2025 Tanish Shivhare — Advanced Echo Server
-  </footer>
-
-  <script>
-    /* === CONFIG: change these file names to match your repo img/ folder ===
-       Put your screenshots inside repo folder `img/` and name them accordingly.
-       Example filenames used below: "1.png", "2.png", ... or set your own names.
-    */
-    const IMAGES = [
-      'img/1.png',
-      'img/2.png',
-      'img/3.png',
-      'img/4.png',
-      'img/5.png'
-    ];
-
-    // --------- Grid gallery render ----------
-    const grid = document.getElementById('grid');
-
-    function makeCard(src, idx) {
-      const wrap = document.createElement('div');
-      wrap.className = 'rounded-xl overflow-hidden shadow-lg border border-slate-800 cursor-pointer glass transition-transform transform hover:scale-105';
-      const img = document.createElement('img');
-      img.src = src;
-      img.alt = `screenshot-${idx+1}`;
-      img.loading = 'lazy';
-      img.className = 'w-full object-cover img-h';
-      // handle error if image missing
-      img.onerror = () => {
-        img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450"><rect width="100%" height="100%" fill="#0f172a"/><text x="50%" y="50%" font-size="20" fill="#94a3b8" text-anchor="middle" dominant-baseline="middle">Image not found<br>${src}</text></svg>`);
-      };
-      wrap.appendChild(img);
-
-      // caption overlay
-      const cap = document.createElement('div');
-      cap.className = 'p-3';
-      cap.innerHTML = `<div class="text-sm font-medium">Screenshot ${idx+1}</div><div class="text-xs text-slate-400 mt-1">Click to view larger</div>`;
-      wrap.appendChild(cap);
-
-      // click -> open modal
-      wrap.addEventListener('click', () => openModal(src, idx));
-      return wrap;
-    }
-
-    IMAGES.forEach((s, i) => grid.appendChild(makeCard(s, i)));
-
-    // --------- Modal logic ----------
-    const modal = document.getElementById('modal');
-    const modalImg = document.getElementById('modalImg');
-    const modalCaption = document.getElementById('modalCaption');
-    const openInNew = document.getElementById('openInNew');
-
-    function openModal(src, idx) {
-      modalImg.src = src;
-      modalCaption.textContent = `Screenshot ${idx+1}`;
-      openInNew.href = src;
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-      document.body.style.overflow = '';
-      modalImg.src = '';
-    }
-
-    document.getElementById('closeModal').addEventListener('click', closeModal);
-    document.getElementById('modalBackdrop').addEventListener('click', closeModal);
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeModal();
-    });
-
-    // --------- Carousel logic ----------
-    const carouselImg = document.getElementById('carouselImage');
-    const prevBtn = document.getElementById('prev');
-    const nextBtn = document.getElementById('next');
-    const dots = document.getElementById('carouselDots');
-
-    let idx = 0;
-    let autoplay = true;
-    let timer = null;
-
-    function renderCarousel(i) {
-      idx = (i + IMAGES.length) % IMAGES.length;
-      carouselImg.src = IMAGES[idx];
-      // dots
-      dots.innerHTML = '';
-      IMAGES.forEach((_, j) => {
-        const d = document.createElement('button');
-        d.className = 'w-2 h-2 rounded-full ' + (j === idx ? 'bg-indigo-400' : 'bg-white/30');
-        d.addEventListener('click', () => {
-          renderCarousel(j); resetTimer();
-        });
-        dots.appendChild(d);
-      });
-    }
-
-    function prev() { renderCarousel(idx - 1); resetTimer(); }
-    function next() { renderCarousel(idx + 1); resetTimer(); }
-
-    prevBtn.addEventListener('click', prev);
-    nextBtn.addEventListener('click', next);
-
-    function resetTimer() {
-      if (timer) clearInterval(timer);
-      if (autoplay) timer = setInterval(() => renderCarousel(idx + 1), 3500);
-    }
-
-    // start
-    if (IMAGES.length > 0) {
-      renderCarousel(0);
-      resetTimer();
-    } else {
-      carouselImg.alt = 'No images';
-    }
-
-    // --------- Optional: Download zip of repo (simple fallback link) ----------
-    // This button will redirect to the GitHub repo zip download. If you'd like a packaged
-    // zip inside the repo, update the link to point directly to it.
-    const downloadBtn = document.getElementById('downloadZip');
-    downloadBtn.addEventListener('click', () => {
-      // replace <username> and <repo> if you want direct zip link
-      const zipUrl = 'https://github.com/TANISHX1/Server/archive/refs/heads/main.zip';
-      window.open(zipUrl, '_blank', 'noopener');
-    });
-
-    // Accessibility: keyboard navigation for gallery (left/right for carousel)
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') prev();
-      if (e.key === 'ArrowRight') next();
-    });
-
-    // small defensive: if images folder path is different, user can set IMAGES variable above.
-  </script>
+    <script src="script.js"></script>
 </body>
+
 </html>

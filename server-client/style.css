@@ -1,0 +1,485 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* typing effect */
+.typingText {
+    display: inline-block;
+    white-space: normal;
+    overflow: visible !important;
+    box-sizing: content-box;
+    width: auto !important;
+    border-right: none !important;
+    /* remove animated caret */
+    animation: none !important;
+    /* disable typing & caret animations */
+}
+
+/* Animated heading: shimmer + gentle pop-in (respects reduced-motion) */
+.typingText {
+    display: inline-block;
+    background: linear-gradient(90deg, #ffffff 0%, #a78bfa 45%, #ffffff 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: headingShimmer 2.8s linear infinite, headingPop 600ms cubic-bezier(.2, .9, .3, 1) both;
+    transform-origin: center;
+    will-change: transform, background-position;
+}
+
+/* shimmer movement */
+@keyframes headingShimmer {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 200% 50%;
+    }
+}
+
+/* entrance pop */
+@keyframes headingPop {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.985);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Respect user preference to reduce motion */
+@media (prefers-reduced-motion: reduce) {
+    .typingText {
+        animation: none !important;
+        background: none !important;
+        color: #ffffff;
+        -webkit-background-clip: initial;
+    }
+}
+
+/* Ensure front heading not clipped and remains large */
+.front-heading {
+    font-size: clamp(3.2rem, 8vw, 6.5rem);
+    line-height: 1.02;
+    margin: 0.15em 0;
+    font-weight: 900;
+    overflow: visible !important;
+    word-break: break-word;
+    -webkit-font-smoothing: antialiased;
+    transform-origin: center;
+    z-index: 2;
+    display: block;
+    padding-bottom: 0.25rem;
+}
+
+/* Remove typewriter caret/animation and ensure heading fully visible */
+.typingText {
+    display: inline-block;
+    white-space: normal;
+    overflow: visible !important;
+    box-sizing: content-box;
+    width: auto !important;
+    border-right: none !important;
+    /* remove animated caret */
+    animation: none !important;
+    /* disable typing & caret animations */
+}
+
+/* Ensure front heading not clipped and remains large */
+.front-heading {
+    font-size: clamp(3.2rem, 8vw, 6.5rem);
+    line-height: 1.02;
+    margin: 0.15em 0;
+    font-weight: 900;
+    overflow: visible !important;
+    word-break: break-word;
+    -webkit-font-smoothing: antialiased;
+    transform-origin: center;
+    z-index: 2;
+    display: block;
+    padding-bottom: 0.25rem;
+}
+
+/* Make sure parent containers don't clip the heading */
+header,
+.hero,
+.container {
+    overflow: visible !important;
+    position: relative;
+}
+
+/* glass */
+.glassImg {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    width: 900px;
+}
+
+/* stronger dark fade out */
+.fadeImg {
+    opacity: .25;
+    transform: scale(.94);
+    transition: .6s ease;
+}
+
+.fadeImg.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* neon ripple edge */
+.neonRipple {
+    box-shadow: 0 0 12px #0ff88e80, 0 0 30px #0ff88e30;
+    transition: .6s ease;
+}
+
+/* remove scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Glass card, floating animation */
+.glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.floating {
+    animation: floaty 6s ease-in-out infinite;
+}
+
+@keyframes floaty {
+    0% {
+        transform: translateY(0)
+    }
+
+    50% {
+        transform: translateY(-6px)
+    }
+
+    100% {
+        transform: translateY(0)
+    }
+}
+
+/* modal backdrop */
+.modal-backdrop {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+/* responsive image heights used by grid */
+.img-h {
+    height: 16rem;
+}
+
+@media(min-width:640px) {
+    .img-h {
+        height: 14rem;
+    }
+}
+
+@media(min-width:1024px) {
+    .img-h {
+        height: 12rem;
+    }
+}
+
+/* Heading visibility & sizing fixes */
+h1,
+h2,
+.heading {
+    /* responsive, larger heading */
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    /* increase default heading size */
+    line-height: 1.08;
+    font-weight: 700;
+    margin: 0.2em 0;
+    white-space: normal;
+    word-break: break-word;
+    overflow: visible;
+}
+
+/* Ensure parent containers don't clip headings */
+header,
+.hero,
+.hero__inner,
+.container {
+    overflow: visible;
+    position: relative;
+    z-index: 1;
+}
+
+/* Smooth carousel container tweaks */
+.autoMove {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: auto;
+    /* handled in JS */
+    scrollbar-width: none;
+    /* hide scrollbar on Firefox */
+}
+
+.autoMove::-webkit-scrollbar {
+    display: none;
+}
+
+/* hide scrollbar on WebKit */
+/* Ensure children don't shrink unexpectedly */
+.autoMove>* {
+    flex: 0 0 auto;
+}
+
+/* Increase front heading size and prevent clipping */
+header h1,
+.hero h1,
+.front-heading,
+h1 {
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    /* larger, responsive */
+    line-height: 1.02;
+    margin: 0.25em 0;
+    word-break: break-word;
+    white-space: normal;
+    overflow: visible;
+}
+
+/* FRONT HEADING: larger and not clipped */
+header h1,
+.front-heading,
+.hero h1,
+h1 {
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    /* bigger front heading */
+    line-height: 1.02;
+    margin: 0.25em 0;
+    font-weight: 700;
+    white-space: normal;
+    word-break: break-word;
+    overflow: visible;
+}
+
+/* MAIN FRONT HEADING: larger and responsive */
+header h1,
+.front-heading,
+.hero h1,
+h1 {
+    font-size: clamp(3rem, 8vw, 6rem);
+    /* increased main heading size */
+    line-height: 1.02;
+    margin: 0.25em 0;
+    font-weight: 700;
+    white-space: normal;
+    word-break: break-word;
+    overflow: visible;
+}
+
+/* Ensure main heading is large and not clipped */
+.front-heading,
+header h1,
+.hero h1,
+h1 {
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 1.02;
+    margin: 0.25em 0;
+    font-weight: 800;
+    white-space: normal;
+    word-break: break-word;
+    overflow: visible;
+}
+
+/* Prevent common containers from clipping heading */
+header,
+.hero,
+.hero__inner,
+.container {
+    overflow: visible;
+    position: relative;
+    z-index: 1;
+}
+
+/* Carousel: hide native scrollbar and use transform animation */
+.autoMove {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    /* hide overflow since track is transformed */
+    padding: 0.25rem 0;
+}
+
+.autoMove-track {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    will-change: transform;
+    transition: transform 0s linear;
+}
+
+.autoMove-track>* {
+    flex: 0 0 auto;
+}
+
+/* optional: visually hide scrollbars if any scrollable fallback occurs */
+.autoMove::-webkit-scrollbar {
+    display: none;
+}
+
+.autoMove {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* prevent any page horizontal scroll caused by large transforms */
+html,
+body {
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+/* main front heading: larger, centered, no clipping */
+.front-heading,
+header h1,
+.hero h1,
+h1.typingText {
+    font-size: clamp(3rem, 8vw, 6rem);
+    /* adjust to taste */
+    line-height: 1.02;
+    font-weight: 800;
+    margin: 0.25em 0;
+    text-align: center;
+    display: block;
+    max-width: 100%;
+    white-space: normal;
+    word-break: break-word;
+    overflow: visible;
+}
+
+/* typing effect safety: keep it from shifting layout horizontally */
+.typingText {
+    display: inline-block;
+    max-width: 100%;
+    white-space: normal;
+}
+
+/* carousel: hide native scrollbar and force transform-based horizontal layout */
+.carousel-container,
+.autoMove {
+    width: 100%;
+    overflow: hidden;
+    /* hide native scroll while autoplay is running */
+    position: relative;
+}
+
+/* track must be inline content so translateX works without causing page width to grow */
+.autoMove-track {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: max-content;
+    /* prevents items wrapping or compressing */
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+}
+
+/* keep images block-level and avoid extra margins that cause overflow */
+.autoMove img,
+.carousel-item,
+.autoMove-track>* {
+    display: block;
+    flex: 0 0 auto;
+    max-width: none;
+}
+
+/* hide scrollbars if any fallback scroll appears */
+.carousel-container::-webkit-scrollbar,
+.autoMove::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Larger animated front heading */
+.front-heading {
+    font-size: clamp(3.2rem, 8vw, 6.5rem);
+    /* larger, responsive */
+    line-height: 1;
+    margin: 0.15em 0;
+    font-weight: 900;
+    overflow: visible;
+    word-break: break-word;
+    -webkit-font-smoothing: antialiased;
+    transform-origin: center;
+    animation: headingPop 600ms cubic-bezier(.2, .9, .3, 1) both;
+}
+
+/* subtle entrance pop for the heading element */
+@keyframes headingPop {
+    from {
+        transform: scale(.96);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ensure heading is not clipped by parent containers */
+header,
+.hero,
+.container,
+.front-heading {
+    overflow: visible;
+    position: relative;
+    z-index: 1;
+}
+
+/* Slightly bigger controls for the larger carousel */
+#prev,
+#next {
+    padding: 0.6rem;
+    font-size: 1rem;
+}
+
+/* ensure no horizontal overflow from larger carousel */
+html,
+body {
+    overflow-x: hidden;
+}
+
+/* utility: focus outline */
+:focus {
+    outline: 2px solid rgba(99, 102, 241, 0.22);
+    outline-offset: 2px;
+}
+
+/* prevent horizontal page overflow from transforms */
+html,
+body {
+    overflow-x: hidden;
+}
+
+/* hide native scrollbars when used on small containers */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
