@@ -1,522 +1,460 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Compression & Decompression Walkthrough</title>
+  <title>Compression & Decompression - Results</title>
+
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            primary: {
-              50: '#f0fdfa',
-              100: '#ccfbf1',
-              200: '#99f6e4',
-              300: '#5eead4',
-              400: '#2dd4bf',
-              500: '#14b8a6',
-              600: '#0d9488',
-              700: '#0f766e',
-              800: '#115e59',
-              900: '#134e4a',
-            },
-            dark: {
-              800: '#1e293b',
-              900: '#0f172a',
-            },
-            light: {
-              50: '#fafafa',
-              100: '#f4f4f5',
-              200: '#e4e4e7',
-              300: '#d4d4d8',
-              400: '#a1a1aa',
-              500: '#71717a',
-              600: '#52525b',
-              700: '#3f3f46',
-              800: '#27272a',
-              900: '#18181b',
-            }
-          },
-          keyframes: {
-            float: {
-              '0%, 100%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(-10px)' },
-            },
-            pulse: {
-              '0%, 100%': { opacity: 1 },
-              '50%': { opacity: 0.6 },
-            },
-            shimmer: {
-              '0%': { backgroundPosition: '-1000px 0' },
-              '100%': { backgroundPosition: '1000px 0' },
-            }
-          },
-          animation: {
-            float: 'float 5s ease-in-out infinite',
-            pulse: 'pulse 3s ease-in-out infinite',
-            shimmer: 'shimmer 5s infinite linear',
-          }
-        }
-      }
-    }
-  </script>
+
+  <!-- AOS Animations -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+
+  <!-- Mermaid -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+
+  <!-- Custom Styling -->
   <style>
-    /* Custom toggle styles */
-    .toggle-checkbox:checked {
-      right: 0;
-      border-color: #0d9488;
-    }
-    .toggle-checkbox:checked + .toggle-label {
-      background-color: #0d9488;
-    }
-    
-    /* Theme-specific styles */
-    .dark-mode {
-      background: linear-gradient(to bottom right, #0f172a, #1e293b);
-      color: #ffffff;
-    }
-    
-    .light-mode {
-      background: linear-gradient(to bottom right, #fafafa, #e4e4e7);
-      color: #27272a;
-    }
-    
-    /* Enhanced transitions */
-    body, section, h1, h2, h3, p, div {
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    /* MATRIX BACKGROUND: animated 0/1 rain on canvas */
+    body {
+      position: relative;
+      background: #020617;
+      color: #e5e7eb;
+      overflow-x: hidden;
+      margin: 0;
     }
 
-    /* Custom gradient text */
+    #matrix-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background: radial-gradient(circle at top, #020617 0%, #020617 40%, #000000 100%);
+    }
+
+    #matrix-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Soft glow overlay so content is readable over matrix */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at top, rgba(34,197,235,0.18), transparent 55%),
+        radial-gradient(circle at bottom, rgba(129,140,248,0.16), transparent 55%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
     .gradient-text {
-      background: linear-gradient(45deg, #14b8a6, #2563eb, #4f46e5);
+      background: linear-gradient(45deg, #06b6d4, #3b82f6, #8b5cf6);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      background-size: 400% 400%;
-      animation: gradient-bg 8s ease infinite;
     }
 
-    @keyframes gradient-bg {
-      0% { background-position: 0% 50% }
-      50% { background-position: 100% 50% }
-      100% { background-position: 0% 50% }
-    }
-
-    /* Custom 3D effect for the main heading */
-    .text-3d {
-      text-shadow: 
-        0 1px 0 #cccccc, 
-        0 2px 0 #c9c9c9, 
-        0 3px 0 #bbbbbb, 
-        0 4px 0 #b9b9b9, 
-        0 5px 0 #aaaaaa, 
-        0 6px 1px rgba(0,0,0,.1), 
-        0 0 5px rgba(0,0,0,.1), 
-        0 1px 3px rgba(0,0,0,.3), 
-        0 3px 5px rgba(0,0,0,.2), 
-        0 5px 10px rgba(0,0,0,.25), 
-        0 10px 10px rgba(0,0,0,.2), 
-        0 20px 20px rgba(0,0,0,.15);
-    }
-
-    /* Image zoom effect */
-    .img-container {
-      overflow: hidden;
-    }
-    
-    .img-zoom {
-      transition: transform 0.5s ease;
-    }
-    
-    .img-container:hover .img-zoom {
-      transform: scale(1.075);
-    }
-
-    /* Shimmer effect for section borders */
     .shimmer-border {
       position: relative;
-      overflow: hidden;
+      border-radius: 1rem;
     }
 
     .shimmer-border::before {
       content: '';
       position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: linear-gradient(115deg, 
-        rgba(255,255,255,0) 0%, 
-        rgba(255,255,255,0) 40%, 
-        rgba(255,255,255,0.6) 50%, 
-        rgba(255,255,255,0) 60%, 
-        rgba(255,255,255,0) 100%);
+      inset: -2px;
+      background: linear-gradient(115deg, transparent, rgba(59,130,246,0.6), transparent);
+      border-radius: 0.875rem;
       z-index: -1;
       background-size: 200% 100%;
-      animation: shimmer 2.5s infinite linear;
-      border-radius: inherit;
-    }
-
-    .dark .shimmer-border::before {
-      background: linear-gradient(115deg, 
-        rgba(20,184,166,0) 0%, 
-        rgba(20,184,166,0) 40%, 
-        rgba(20,184,166,0.4) 50%, 
-        rgba(20,184,166,0) 60%, 
-        rgba(20,184,166,0) 100%);
-    }
-
-    .light .shimmer-border::before {
-      background: linear-gradient(115deg, 
-        rgba(15,118,110,0) 0%, 
-        rgba(15,118,110,0) 40%, 
-        rgba(15,118,110,0.4) 50%, 
-        rgba(15,118,110,0) 60%, 
-        rgba(15,118,110,0) 100%);
+      animation: shimmer 3s infinite linear;
     }
 
     @keyframes shimmer {
-      to {
-        background-position: 200% 0;
+      to { background-position: 200% 0; }
+    }
+
+    .hover\:img-scale img {
+      transition: transform 0.4s ease;
+    }
+
+    .hover\:img-scale:hover img {
+      transform: scale(1.05);
+    }
+
+    .code-block {
+      background: #020617;
+      color: #e2e8f0;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      overflow-x: auto;
+      border-left: 4px solid #38bdf8;
+    }
+
+    /* Mermaid container tweaks */
+    .mermaid {
+      background: #020617;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      border: 1px solid rgba(148,163,184,0.4);
+      overflow-x: auto;
+    }
+
+    @media (max-width: 640px) {
+      .mermaid {
+        font-size: 0.8rem;
       }
     }
 
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-      width: 12px;
-    }
-
-    .dark ::-webkit-scrollbar-track {
-      background: #1e293b;
-    }
-
-    .dark ::-webkit-scrollbar-thumb {
-      background: #0d9488;
-      border-radius: 6px;
-    }
-
-    .light ::-webkit-scrollbar-track {
-      background: #e4e4e7;
-    }
-
-    .light ::-webkit-scrollbar-thumb {
-      background: #0f766e;
-      border-radius: 6px;
-    }
-
-    /* Glow effect on hover */
-    .hover-glow:hover {
-      box-shadow: 0 0 15px rgba(20, 184, 166, 0.6);
-    }
-
-    .light .hover-glow:hover {
-      box-shadow: 0 0 15px rgba(15, 118, 110, 0.5);
+    /* Simple glass card for developers */
+    .glass {
+      background: rgba(15,23,42,0.85);
+      border-radius: 0.75rem;
+      border: 1px solid rgba(148,163,184,0.4);
+      box-shadow: 0 18px 45px rgba(15,23,42,0.8);
+      backdrop-filter: blur(10px);
     }
   </style>
-</head>
-<body class="bg-gradient-to-br from-dark-900 to-dark-800 text-white font-sans min-h-screen dark:bg-gradient-to-br dark:from-dark-900 dark:to-dark-800 dark:text-white light:bg-gradient-to-br light:from-light-50 light:to-light-200 light:text-dark-900" id="page-body">
-  <div class="max-w-6xl mx-auto p-6 pt-10 space-y-12">
-    <!-- Theme Toggle -->
-    <div class="fixed top-6 right-6 z-10">
-      <div class="relative inline-block w-16 mr-2 align-middle select-none">
-        <input type="checkbox" name="toggle" id="themeToggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" />
-        <label for="themeToggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label>
-      </div>
-      <span class="text-sm text-white dark:text-white light:text-dark-900" id="mode-text">Dark Mode</span>
-    </div>
 
-    <!-- Header with animated H1 -->
-    <header class="text-center mb-16" data-aos="fade-down" data-aos-duration="1200">
-      <div class="relative group perspective-1000">
-        <div class="inline-block p-3 px-8 mb-4 bg-gradient-to-r from-primary-700 via-blue-600 to-primary-700 bg-size-200 animate-shimmer rounded-lg shadow-2xl transform rotate-1 transition-all duration-500 hover:rotate-0 hover:scale-105">
-          <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight text-3d">
-            COMPRESSION & <br class="hidden sm:block"> DECOMPRESSION
-          </h1>
-        </div>
-        <div class="absolute -inset-1 bg-gradient-to-r from-primary-600 via-blue-500 to-primary-600 rounded-xl blur-xl opacity-30 group-hover:opacity-70 transition duration-1000"></div>
-      </div>
-      <p class="gradient-text text-xl mt-6 font-semibold animate-pulse"> Process Walkthrough</p>
+  <script>
+    // Mermaid theme customization for more "technical" look
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "dark",
+      themeVariables: {
+        primaryColor: "#020617",
+        primaryTextColor: "#e5e7eb",
+        primaryBorderColor: "#38bdf8",
+        lineColor: "#38bdf8",
+        secondaryColor: "#0f172a",
+        tertiaryColor: "#020617",
+        edgeLabelBackground: "#020617",
+        nodeBorder: "#38bdf8",
+        clusterBkg: "#020617",
+        clusterBorder: "#6366f1",
+        fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
+      },
+      flowchart: {
+        curve: "basis"
+      }
+    });
+  </script>
+</head>
+<body class="text-gray-100 min-h-screen font-mono leading-relaxed">
+
+  <!-- MATRIX BACKGROUND CANVAS -->
+  <div id="matrix-bg">
+    <canvas id="matrix-canvas"></canvas>
+  </div>
+
+  <div class="max-w-6xl mx-auto p-6 pt-12 space-y-16 relative">
+
+    <!-- Header -->
+    <header class="text-center mb-14" data-aos="fade">
+      <h1 class="text-5xl font-bold gradient-text tracking-tight">
+        Compression & Decompression
+      </h1>
+      <p class="text-blue-300 text-xl mt-4 font-semibold">
+        Program Execution Results Dashboard
+      </p>
+      <div class="w-32 h-0.5 bg-gradient-to-r from-cyan-500 to-indigo-500 mx-auto mt-4"></div>
     </header>
 
-    <!-- Compression Section -->
-    <section class="bg-dark-800/50 rounded-2xl p-8 border border-primary-900/30 shadow-xl backdrop-blur-sm shimmer-border hover-glow transition-all duration-500" data-aos="fade-up" data-aos-duration="1000">
-      <div class="flex items-center mb-8">
-        <div class="w-14 h-14 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center mr-5 shadow-lg animate-float">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <!-- Meta Info -->
+    <div class="text-center bg-slate-900/80 p-5 rounded-xl shadow-lg border border-slate-700" data-aos="fade-up">
+      <h2 class="text-2xl font-bold text-cyan-400 mb-2">Execution Log Summary</h2>
+    </div>
+
+    <!-- Mermaid Diagrams – Parallel Layout -->
+    <section class="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 pb-12" data-aos="fade-up">
+      <h2 class="text-3xl font-semibold mb-6 text-center">Processing Flow</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Decompression Diagram -->
+        <div class="bg-slate-900/80 rounded-xl p-6 shadow-lg border border-slate-700">
+          <h3 class="text-xl font-semibold mb-4 text-center text-cyan-300">Decompression</h3>
+          <div class="mermaid">
+            graph TD
+              A[Compressed File] --> B[Read Header]
+              B --> C[Rebuild Huffman Tree]
+              C --> D[Decode Bitstream]
+              D --> E[Write Restored File]
+          </div>
+        </div>
+
+        <!-- Compression Diagram -->
+        <div class="bg-slate-900/80 rounded-xl p-6 shadow-lg border border-slate-700">
+          <h3 class="text-xl font-semibold mb-4 text-center text-indigo-300">Compression</h3>
+          <div class="mermaid">
+            graph TD
+              A[Input File] --> B[Count Symbol Frequencies]
+              B --> C[Build Huffman Tree]
+              C --> D[Generate Codes]
+              D --> E[Encode to Bitstream]
+              E --> F[Write Compressed File]
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Compression Results -->
+    <section class="bg-slate-900/80 rounded-2xl p-8 shadow-xl shimmer-border hover:scale-105 transition-all duration-500" data-aos="fade-up">
+      <div class="flex items-center mb-6">
+        <div class="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-full flex items-center justify-center mr-4 shadow-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
           </svg>
         </div>
-        <h2 class="text-3xl sm:text-4xl font-bold gradient-text">Compression Workflow</h2>
+        <h2 class="text-3xl font-bold gradient-text">Compression Results</h2>
       </div>
 
-      <!-- Execution Step -->
-      <div class="space-y-8 pl-6 border-l-2 border-primary-700/40">
-        <div class="transition-all duration-500 hover:translate-x-1" data-aos="fade-up" data-aos-delay="100">
-          <h3 class="text-2xl font-medium text-primary-200 mb-4">Execution Step</h3>
-          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700 shadow-md img-container">
-            <img src="images/compression_img/exection.png" alt="Execution Step" class="w-full img-zoom">
-          </div>
+      <div class="border-l-4 border-teal-500 pl-6 space-y-8">
+
+        <!-- Step 1 -->
+        <div class="hover:img-scale" data-aos="zoom-in" data-aos-delay="100">
+          <h3 class="text-xl font-bold text-teal-300">1. Execution Initiated</h3>
+          <p class="text-gray-300 mt-1">The compression script was launched.</p>
+          <img src="images/compression_img/exection.png" alt="Execution Step" class="w-full mt-3 rounded-lg shadow-md">
         </div>
 
-        <!-- File Input Path -->
-        <div class="transition-all duration-500 hover:translate-x-1" data-aos="fade-up" data-aos-delay="200">
-          <h3 class="text-2xl font-medium text-primary-200 mb-4">File Input Path</h3>
-          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700 shadow-md img-container">
-            <img src="images/compression_img/input.png" alt="Input Path" class="w-full img-zoom">
+        <!-- Step 2 -->
+        <div class="hover:img-scale" data-aos="zoom-in" data-aos-delay="200">
+          <h3 class="text-xl font-bold text-teal-300">2. Input File Path</h3>
+          <div class="code-block">
+            Input: /user/data/original_file.txt
           </div>
+          <img src="images/compression_img/input.png" alt="Input Path" class="w-full mt-3 rounded-lg shadow-md">
         </div>
 
-        <!-- File Output Path -->
-        <div class="transition-all duration-500 hover:translate-x-1" data-aos="fade-up" data-aos-delay="300">
-          <h3 class="text-2xl font-medium text-primary-200 mb-4">File Output Path</h3>
-          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700 shadow-md img-container">
-            <img src="images/compression_img/output.png" alt="Output Path" class="w-full img-zoom">
+        <!-- Step 3 -->
+        <div class="hover:img-scale" data-aos="zoom-in" data-aos-delay="300">
+          <h3 class="text-xl font-bold text-teal-300">3. Output Directory</h3>
+          <div class="code-block">
+            Output: /user/data/compressed_file.bin
           </div>
+          <img src="images/compression_img/output.png" alt="Output Path" class="w-full mt-3 rounded-lg shadow-md">
         </div>
 
-        <!-- Compression Process -->
-        <div class="transition-all duration-500 hover:translate-x-1" data-aos="fade-up" data-aos-delay="400">
-          <h3 class="text-2xl font-medium text-primary-200 mb-4">Compression Process</h3>
-          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700 shadow-md img-container">
-            <img src="images/compression_img/compression process.png" alt="Compression Process" class="w-full img-zoom">
-          </div>
+        <!-- Step 4 -->
+        <div class="hover:img-scale" data-aos="zoom-in" data-aos-delay="400">
+          <h3 class="text-xl font-bold text-teal-300">4. Compression Algorithm</h3>
+          <p class="text-gray-300">Using Huffman Encoding (v2.1)</p>
+          <img src="images/compression_img/compression process.png" alt="Compression Process" class="w-full mt-3 rounded-lg shadow-md">
         </div>
 
-        <!-- Compression Summary -->
-        <div class="transition-all duration-500 hover:translate-x-1" data-aos="fade-up" data-aos-delay="500">
-          <h3 class="text-2xl font-medium text-primary-200 mb-4">Compression Summary</h3>
-          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700 shadow-md img-container">
-            <img src="images/compression_img/compressionesum.png" alt="Compression Summary" class="w-full img-zoom">
+        <!-- Step 5 -->
+        <div class="hover:img-scale" data-aos="zoom-in" data-aos-delay="500">
+          <h3 class="text-xl font-bold text-teal-300">5. Compression Summary</h3>
+          <div class="code-block">
+            Original Size:  5.8 MB<br>
+            Compressed Size: 2.1 MB<br>
+            Reduction:      63.8%<br>
+            Time:           1.24s
           </div>
+          <img src="images/compression_img/compressionesum.png" alt="Summary" class="w-full mt-3 rounded-lg shadow-md">
         </div>
 
-        <!-- Result -->
-        <div class="transition-all duration-500 hover:translate-x-1" data-aos="fade-up" data-aos-delay="600">
-          <h3 class="text-2xl font-medium text-primary-200 mb-4">Result</h3>
-          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700 shadow-md img-container">
-            <img src="images/compression_img/RESULT.png" alt="Compression Result" class="w-full img-zoom">
-          </div>
+        <!-- Step 6 -->
+        <div class="hover:img-scale" data-aos="zoom-in" data-aos-delay="600">
+          <h3 class="text-xl font-bold text-teal-300">6. Final Output</h3>
+          <p class="text-green-400 font-semibold">Compression completed successfully.</p>
+          <img src="images/compression_img/RESULT.png" alt="Result" class="w-full mt-3 rounded-lg shadow-md">
         </div>
+
       </div>
     </section>
 
-    <!-- Decompression Section -->
-    <section class="bg-dark-800/50 rounded-2xl p-8 border border-blue-900/30 shadow-xl backdrop-blur-sm shimmer-border hover-glow transition-all duration-500 mt-16" data-aos="fade-up" data-aos-duration="1000">
-      <div class="flex items-center mb-8">
-        <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center mr-5 shadow-lg animate-float">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <!-- Decompression Results -->
+    <section class="bg-slate-900/80 rounded-2xl p-8 shadow-xl shimmer-border hover:scale-105 transition-all duration-500" data-aos="fade-up">
+      <div class="flex items-center mb-6">
+        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mr-4 shadow-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
           </svg>
         </div>
-        <h2 class="text-3xl sm:text-4xl font-bold gradient-text">Decompression Workflow</h2>
+        <h2 class="text-3xl font-bold gradient-text">Decompression Results</h2>
       </div>
 
-      <!-- Execution Step -->
-      <div class="space-y-8 pl-6 border-l-2 border-blue-700/40">
-        <div class="transition-all duration-500 hover:translate-x-1" data-aos="fade-up" data-aos-delay="100">
-          <h3 class="text-2xl font-medium text-blue-200 mb-4">Execution Step</h3>
-          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700 shadow-md img-container">
-            <img src="images/decompression_img/decompress.png" alt="Execution Step" class="w-full img-zoom">
+      <div class="border-l-4 border-blue-500 pl-6 space-y-8">
+
+        <!-- Step 1 -->
+        <div class="hover:img-scale" data-aos="zoom-in" data-aos-delay="100">
+          <h3 class="text-xl font-bold text-blue-300">1. Execution Initiated</h3>
+          <p class="text-gray-300 mt-1">Decompression module started.</p>
+          <img src="images/decompression_img/decompress.png" alt="Execution Step" class="w-full mt-3 rounded-lg shadow-md">
+        </div>
+
+        <!-- Step 2 -->
+        <div class="hover:img-scale" data-aos="zoom-in" data-aos-delay="200">
+          <h3 class="text-xl font-bold text-blue-300">2. Compressed Input</h3>
+          <div class="code-block">
+            Input: /user/data/compressed_file.bin
+          </div>
+          <img src="images/decompression_img/input.png" alt="Input Path" class="w-full mt-3 rounded-lg shadow-md">
+        </div>
+
+        <!-- Step 3 -->
+        <div class="hover:img-scale" data-aos="zoom-in" data-aos-delay="300">
+          <h3 class="text-xl font-bold text-blue-300">3. Restoration Path</h3>
+          <div class="code-block">
+            Output: /user/data/restored_file.txt
+          </div>
+          <img src="images/decompression_img/output.png" alt="Output Path" class="w-full mt-3 rounded-lg shadow-md">
+        </div>
+
+        <!-- Step 4 -->
+        <div class="hover:img-scale" data-aos="zoom-in" data-aos-delay="400">
+          <h3 class="text-xl font-bold text-blue-300">4. Decompression in Progress</h3>
+          <p class="text-gray-300">Reversing Huffman encoding...</p>
+          <img src="images/decompression_img/decompress process.png" alt="Decompression Process" class="w-full mt-3 rounded-lg shadow-md">
+        </div>
+
+        <!-- Step 5 -->
+        <div class="hover:img-scale" data-aos="zoom-in" data-aos-delay="500">
+          <h3 class="text-xl font-bold text-blue-300">5. Decompression Summary</h3>
+          <div class="code-block">
+            Compressed Size: 2.1 MB<br>
+            Restored Size:   5.8 MB<br>
+            Accuracy:        100%<br>
+            Integrity:       Verified
+          </div>
+          <img src="images/decompression_img/decompress resume.png" alt="Summary" class="w-full mt-3 rounded-lg shadow-md">
+        </div>
+
+        <!-- Step 6 -->
+        <div class="hover:img-scale" data-aos="zoom-in" data-aos-delay="600">
+          <h3 class="text-xl font-bold text-blue-300">6. Final Output</h3>
+          <p class="text-green-400 font-semibold">Decompression completed successfully. Data integrity verified.</p>
+          <img src="images/decompression_img/OUTPUT.png" alt="Result" class="w-full mt-3 rounded-lg shadow-md">
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Developers -->
+    <section id="developers" class="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 pb-12" data-aos="fade-up">
+      <h2 class="text-2xl font-semibold mb-4">Developers</h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Dev 1 -->
+        <div class="glass p-4 rounded-lg">
+          <div class="text-sm font-semibold">Tanish Shivhare</div>
+          <div class="mt-2 text-slate-300 text-sm">Role: Developer</div>
+          <div class="mt-3 space-y-1 text-sm">
+            <div>GitHub:
+              <a href="https://github.com/TANISHX1" target="_blank" rel="noopener noreferrer"
+                class="text-indigo-400">github.com/TANISHX1</a>
+            </div>
+            <div>LinkedIn:
+              <a href="https://www.linkedin.com/in/tanish-shivhare-71b576222" target="_blank"
+                rel="noopener noreferrer"
+                class="text-indigo-400">linkedin.com/in/tanish-shivhare-71b576222</a>
+            </div>
+            <div>Email:
+              <a href="mailto:Tanishshivhare2@gmail.com"
+                class="text-indigo-400">Tanishshivhare2@gmail.com</a>
+            </div>
+            <div>Phone:
+              <a href="tel:+919343921605" class="text-indigo-400">+91 93439 21605</a>
+            </div>
           </div>
         </div>
 
-        <!-- File Input Path -->
-        <div class="transition-all duration-500 hover:translate-x-1" data-aos="fade-up" data-aos-delay="200">
-          <h3 class="text-2xl font-medium text-blue-200 mb-4">File Input Path</h3>
-          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700 shadow-md img-container">
-            <img src="images/decompression_img/input.png" alt="Input Path" class="w-full img-zoom">
-          </div>
-        </div>
-
-        <!-- File Output Path -->
-        <div class="transition-all duration-500 hover:translate-x-1" data-aos="fade-up" data-aos-delay="300">
-          <h3 class="text-2xl font-medium text-blue-200 mb-4">File Output Path</h3>
-          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700 shadow-md img-container">
-            <img src="images/decompression_img/output.png" alt="Output Path" class="w-full img-zoom">
-          </div>
-        </div>
-
-        <!-- Decompression Process -->
-        <div class="transition-all duration-500 hover:translate-x-1" data-aos="fade-up" data-aos-delay="400">
-          <h3 class="text-2xl font-medium text-blue-200 mb-4">Decompression Process</h3>
-          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700 shadow-md img-container">
-            <img src="images/decompression_img/decompress process.png" alt="Decompression Process" class="w-full img-zoom">
-          </div>
-        </div>
-
-        <!-- Decompression Summary -->
-        <div class="transition-all duration-500 hover:translate-x-1" data-aos="fade-up" data-aos-delay="500">
-          <h3 class="text-2xl font-medium text-blue-200 mb-4">Decompression Summary</h3>
-          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700 shadow-md img-container">
-            <img src="images/decompression_img/decompress resume.png" alt="Decompression Summary" class="w-full img-zoom">
-          </div>
-        </div>
-
-        <!-- Result -->
-        <div class="transition-all duration-500 hover:translate-x-1" data-aos="fade-up" data-aos-delay="600">
-          <h3 class="text-2xl font-medium text-blue-200 mb-4">Result</h3>
-          <div class="bg-dark-900/70 rounded-xl overflow-hidden border border-gray-700 shadow-md img-container">
-            <img src="images/decompression_img/OUTPUT.png" alt="Decompression Result" class="w-full img-zoom">
+        <!-- Dev 2 -->
+        <div class="glass p-4 rounded-lg">
+          <div class="text-sm font-semibold">Yash Barskar</div>
+          <div class="mt-2 text-slate-300 text-sm">Role: Developer</div>
+          <div class="mt-3 space-y-1 text-sm">
+            <div>GitHub:
+              <a href="https://github.com/Yashx0012" target="_blank" rel="noopener noreferrer"
+                class="text-indigo-400">github.com/Yashx0012</a>
+            </div>
+            <div>LinkedIn:
+              <a href="https://www.linkedin.com/in/yash-barskar-a237b1329" target="_blank"
+                rel="noopener noreferrer"
+                class="text-indigo-400">linkedin.com/in/yash-barskar-a237b1329</a>
+            </div>
+            <div>Email:
+              <a href="mailto:yash.sudhakar20055@gmail.com"
+                class="text-indigo-400">yash.sudhakar20055@gmail.com</a>
+            </div>
           </div>
         </div>
       </div>
     </section>
+    <!-- end Developers -->
 
-    <!-- Footer -->
-    <footer class="text-center text-gray-400 py-12 mt-16 dark:text-gray-400 light:text-gray-600" data-aos="fade-up" data-aos-delay="100">
-      <div class="flex flex-col items-center justify-center space-y-4">
-        <div class="flex items-center justify-center space-x-3">
-          <div class="w-8 h-1 bg-gradient-to-r from-primary-500 to-blue-500 rounded-full"></div>
-          <p class="text-lg font-medium">© 2025 Compression & Decompression Tool</p>
-          <div class="w-8 h-1 bg-gradient-to-r from-blue-500 to-primary-500 rounded-full"></div>
-        </div>
-        <p class="text-sm opacity-75">Developers </p>
-        <p class="text-sm opacity-75">Tanish Shivhare </p>
-        <p class="text-sm opacity-75">Yash Baraskar </p>
-      </div>
-    </footer>
   </div>
 
+  <!-- Initialize AOS & Matrix Background -->
   <script>
-    // Initialize AOS animation library
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', () => {
       AOS.init({
+        duration: 800,
+        easing: 'ease-out-cubic',
         once: false,
-        mirror: true,
-        offset: 100,
-        easing: 'ease-out-cubic'
+        offset: 100
       });
-      
-      // Refresh AOS on window resize for better responsiveness
-      window.addEventListener('resize', function() {
-        AOS.refresh();
-      });
-    });
-  
-    // Theme switcher functionality
-    const themeToggle = document.getElementById('themeToggle');
-    const bodyElement = document.getElementById('page-body');
-    const modeText = document.getElementById('mode-text');
-    
-    // Check for saved theme preference or use default (dark)
-    if (localStorage.getItem('theme') === 'light') {
-      setLightMode();
-    } else {
-      setDarkMode();
-    }
-    
-    // Theme toggle event listener
-    themeToggle.addEventListener('change', function() {
-      if (this.checked) {
-        setLightMode();
-      } else {
-        setDarkMode();
+
+      // Matrix-style 0/1 background
+      const canvas = document.getElementById('matrix-canvas');
+      const ctx = canvas.getContext('2d');
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
       }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      const fontSize = 16;
+      const columns = () => Math.floor(canvas.width / fontSize);
+      let drops = [];
+
+      function initDrops() {
+        drops = [];
+        const cols = columns();
+        for (let i = 0; i < cols; i++) {
+          drops[i] = Math.random() * -20; // random start height
+        }
+      }
+      initDrops();
+      window.addEventListener('resize', initDrops);
+
+      function draw() {
+        // Slight fade for trail
+        ctx.fillStyle = 'rgba(2, 6, 23, 0.12)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#22c55e'; // greenish
+        ctx.font = fontSize + 'px monospace';
+
+        const cols = columns();
+        for (let i = 0; i < cols; i++) {
+          const text = Math.random() > 0.5 ? '1' : '0';
+          const x = i * fontSize;
+          const y = drops[i] * fontSize;
+
+          ctx.fillText(text, x, y);
+
+          if (y > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          } else {
+            drops[i]++;
+          }
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      draw();
     });
-    
-    function setDarkMode() {
-      bodyElement.classList.remove('light-mode');
-      bodyElement.classList.add('dark-mode');
-      document.documentElement.classList.remove('light');
-      document.documentElement.classList.add('dark');
-      
-      // Update all section backgrounds for dark mode
-      updateSectionStyles('dark');
-      
-      themeToggle.checked = false;
-      modeText.textContent = "Dark Mode";
-      localStorage.setItem('theme', 'dark');
-      
-      // Reinitialize AOS after theme change for smooth animations
-      setTimeout(() => {
-        AOS.refresh();
-      }, 500);
-    }
-    
-    function setLightMode() {
-      bodyElement.classList.remove('dark-mode');
-      bodyElement.classList.add('light-mode');
-      document.documentElement.classList.remove('dark');
-      document.documentElement.classList.add('light');
-      
-      // Update all section backgrounds for light mode
-      updateSectionStyles('light');
-      
-      themeToggle.checked = true;
-      modeText.textContent = "Light Mode";
-      localStorage.setItem('theme', 'light');
-      
-      // Reinitialize AOS after theme change for smooth animations
-      setTimeout(() => {
-        AOS.refresh();
-      }, 500);
-    }
-    
-    function updateSectionStyles(mode) {
-      const sections = document.querySelectorAll('section');
-      sections.forEach(section => {
-        if (mode === 'light') {
-          section.classList.remove('bg-dark-800/50');
-          section.classList.add('bg-light-200/70');
-          section.style.color = '#27272a'; // dark text for light mode
-        } else {
-          section.classList.remove('bg-light-200/70');
-          section.classList.add('bg-dark-800/50');
-          section.style.color = '#ffffff'; // light text for dark mode
-        }
-      });
-      
-      // Update headings
-      const headings = document.querySelectorAll('h3');
-      headings.forEach(heading => {
-        if (mode === 'light') {
-          heading.style.color = '#0f766e'; // primary color for light mode
-        } else {
-          heading.style.color = ''; // reset to default for dark mode
-        }
-      });
-      
-      // Update image containers
-      const imgContainers = document.querySelectorAll('.bg-dark-900\\/70');
-      imgContainers.forEach(container => {
-        if (mode === 'light') {
-          container.classList.remove('bg-dark-900/70', 'border-gray-700');
-          container.classList.add('bg-white/90', 'border-light-300');
-        } else {
-          container.classList.remove('bg-white/90', 'border-light-300');
-          container.classList.add('bg-dark-900/70', 'border-gray-700');
-        }
-      });
-      
-      // Update border colors based on theme
-      const borderElements = document.querySelectorAll('.border-l-2');
-      borderElements.forEach(element => {
-        if (mode === 'light') {
-          if (element.classList.contains('border-primary-700/40')) {
-            element.classList.remove('border-primary-700/40');
-            element.classList.add('border-primary-600/70');
-          }
-          if (element.classList.contains('border-blue-700/40')) {
-            element.classList.remove('border-blue-700/40');
-            element.classList.add('border-blue-600/70');
-          }
-        } else {
-          if (element.classList.contains('border-primary-600/70')) {
-            element.classList.remove('border-primary-600/70');
-            element.classList.add('border-primary-700/40');
-          }
-          if (element.classList.contains('border-blue-600/70')) {
-            element.classList.remove('border-blue-600/70');
-            element.classList.add('border-blue-700/40');
-          }
-        }
-      });
-    }
   </script>
 </body>
 </html>
