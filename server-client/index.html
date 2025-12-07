@@ -17,7 +17,7 @@
         <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-start gap-8">
             <div class="flex-1">
                 <h1 class="front-heading font-extrabold tracking-tight text-white">
-                    <span class="typingText" aria-live="polite">HIGH PERFORMANCE LAN NETWORK TCP SERVER</span>
+                    <span class="typingText" aria-live="polite"> LAN NETWORK TCP SERVER</span>
                 </h1>
 
                 <!-- Info section placed directly below the main heading -->
@@ -122,141 +122,10 @@
             </div>
         </section>
 
-        <!-- Comparison Table: updated concise comparison -->
-        <section id="comparison" class="pb-20">
-            <h2 class="text-2xl font-semibold mb-4">Comparison: This Project vs Popular TCP Servers</h2>
-            <div class="overflow-x-auto bg-slate-900 rounded-lg border border-slate-800 p-4">
-                <table class="min-w-full text-sm table-auto">
-                    <thead class="bg-slate-800 text-left">
-                        <tr>
-                            <th class="px-3 py-2 font-medium">Feature</th>
-                            <th class="px-3 py-2 font-medium">This Project</th>
-                            <th class="px-3 py-2 font-medium">Redis</th>
-                            <th class="px-3 py-2 font-medium">Node.js Net</th>
-                            <th class="px-3 py-2 font-medium">Python Socket</th>
-                            <th class="px-3 py-2 font-medium">Nginx</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-800">
-                        <tr>
-                            <td class="px-3 py-2 font-medium">Architecture</td>
-                            <td class="px-3 py-2">Hybrid (<code>select()</code> + threads)</td>
-                            <td class="px-3 py-2">Event-driven</td>
-                            <td class="px-3 py-2">Event loop</td>
-                            <td class="px-3 py-2">Blocking I/O (typical)</td>
-                            <td class="px-3 py-2">Event-driven (workers)</td>
-                        </tr>
-
-                        <tr>
-                            <td class="px-3 py-2 font-medium">Concurrency (typ.)</td>
-                            <td class="px-3 py-2">≈ 1,024 connections</td>
-                            <td class="px-3 py-2">10k+ connections</td>
-                            <td class="px-3 py-2">10k+ connections</td>
-                            <td class="px-3 py-2">~500 connections</td>
-                            <td class="px-3 py-2">50k+ connections</td>
-                        </tr>
-
-                        <tr>
-                            <td class="px-3 py-2 font-medium">Client ID</td>
-                            <td class="px-3 py-2">UUIDv4 + persistence</td>
-                            <td class="px-3 py-2">Connection ID</td>
-                            <td class="px-3 py-2">Socket ID</td>
-                            <td class="px-3 py-2">IP:Port</td>
-                            <td class="px-3 py-2">Session cookie / header</td>
-                        </tr>
-
-                        <tr>
-                            <td class="px-3 py-2 font-medium">Message format</td>
-                            <td class="px-3 py-2">Custom <code>!?!?</code> framing</td>
-                            <td class="px-3 py-2">RESP protocol</td>
-                            <td class="px-3 py-2">Raw TCP frames</td>
-                            <td class="px-3 py-2">Size-prefixed / app-level</td>
-                            <td class="px-3 py-2">HTTP/1.1 (text-based)</td>
-                        </tr>
-
-                        <tr>
-                            <td class="px-3 py-2 font-medium">Metadata tracking</td>
-                            <td class="px-3 py-2">✅ 22 data points / client</td>
-                            <td class="px-3 py-2">❌</td>
-                            <td class="px-3 py-2">❌</td>
-                            <td class="px-3 py-2">❌</td>
-                            <td class="px-3 py-2">8 data points</td>
-                        </tr>
-
-                        <tr>
-                            <td class="px-3 py-2 font-medium">Latency (LAN)</td>
-                            <td class="px-3 py-2">2–5 ms</td>
-                            <td class="px-3 py-2">0.8–1.5 ms</td>
-                            <td class="px-3 py-2">1–3 ms</td>
-                            <td class="px-3 py-2">5–10 ms</td>
-                            <td class="px-3 py-2">0.5–1.2 ms</td>
-                        </tr>
-
-                        <tr>
-                            <td class="px-3 py-2 font-medium">Throughput (approx)</td>
-                            <td class="px-3 py-2">350 MB/s</td>
-                            <td class="px-3 py-2">650 MB/s</td>
-                            <td class="px-3 py-2">500 MB/s</td>
-                            <td class="px-3 py-2">90 MB/s</td>
-                            <td class="px-3 py-2">900 MB/s</td>
-                        </tr>
-
-                        <tr>
-                            <td class="px-3 py-2 font-medium">Debug tools</td>
-                            <td class="px-3 py-2">Hex dump + traffic logger</td>
-                            <td class="px-3 py-2">CLI monitoring</td>
-                            <td class="px-3 py-2">Console logs / debuggers</td>
-                            <td class="px-3 py-2">Basic print / logging</td>
-                            <td class="px-3 py-2">Access / error logs</td>
-                        </tr>
-
-                        <tr>
-                            <td class="px-3 py-2 font-medium">Error recovery</td>
-                            <td class="px-3 py-2">83% success rate (measured)</td>
-                            <td class="px-3 py-2">98%</td>
-                            <td class="px-3 py-2">95%</td>
-                            <td class="px-3 py-2">70%</td>
-                            <td class="px-3 py-2">99.9%</td>
-                        </tr>
-
-                        <tr>
-                            <td class="px-3 py-2 font-medium">Memory / 100 clients</td>
-                            <td class="px-3 py-2">~50–60 MB</td>
-                            <td class="px-3 py-2">~35 MB</td>
-                            <td class="px-3 py-2">~60 MB</td>
-                            <td class="px-3 py-2">~120 MB</td>
-                            <td class="px-3 py-2">~110 MB</td>
-                        </tr>
-
-                        <tr>
-                            <td class="px-3 py-2 font-medium">Educational value</td>
-                            <td class="px-3 py-2">🔥 High (7 core concepts)</td>
-                            <td class="px-3 py-2">🟡 Moderate</td>
-                            <td class="px-3 py-2">🟡 Moderate</td>
-                            <td class="px-3 py-2">🟢 Good</td>
-                            <td class="px-3 py-2">🔴 Low</td>
-                        </tr>
-
-                        <tr>
-                            <td class="px-3 py-2 font-medium">Production use</td>
-                            <td class="px-3 py-2">Research prototype / basic production</td>
-                            <td class="px-3 py-2">✅ Enterprise</td>
-                            <td class="px-3 py-2">✅ Production</td>
-                            <td class="px-3 py-2">⚠️ Limited</td>
-                            <td class="px-3 py-2">✅ Enterprise</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <p class="mt-3 text-xs text-slate-400">
-                    Notes: numbers are illustrative and depend on workload, build options and environment. Use these as
-                    comparative guidance rather than definitive benchmarks.
-                </p>
-            </div>
-        </section>
+      
 
         <!-- Developers -->
-        <section id="developers" class="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 pb-12">
+        <section id="Developer" class="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 pb-12">
             <h2 class="text-2xl font-semibold mb-4">Developers</h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -284,28 +153,7 @@
                     </div>
                 </div>
 
-                <!-- Dev 2 -->
-                <div class="glass p-4 rounded-lg">
-                    <div class="text-sm font-semibold">Yash Barskar</div>
-                    <div class="mt-2 text-slate-300 text-sm">Role: Developer</div>
-                    <div class="mt-3 space-y-1 text-sm">
-                        <div>GitHub:
-                            <a href="https://github.com/Yashx0012" target="_blank" rel="noopener noreferrer"
-                                class="text-indigo-400">github.com/Yashx0012</a>
-                        </div>
-                        <div>LinkedIn:
-                            <a href="https://www.linkedin.com/in/yash-barskar-a237b1329" target="_blank"
-                                rel="noopener noreferrer"
-                                class="text-indigo-400">linkedin.com/in/yash-barskar-a237b1329</a>
-                        </div>
-                        <div>Email:
-                            <a href="mailto:yash.sudhakar20055@gmail.com"
-                                class="text-indigo-400">yash.sudhakar20055@gmail.com</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+               
         <!-- end Developers -->
     </main>
 
