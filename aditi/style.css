@@ -253,7 +253,6 @@ body {
   font-weight: 600;
   color: var(--pink);
   display: block;
-  padding-left: 10vw; /* Offset for dynamic balance */
 }
 
 .hero-tagline {
