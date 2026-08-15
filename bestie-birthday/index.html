@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Happy Birthday My Bestie ✨💖 | A Romantic Celebration</title>
+  
+  <!-- SEO & Social Meta -->
+  <meta name="description" content="A magical, romantic birthday celebration dedicated to the most special person in my life. Happy Birthday Bestie!">
+  <meta name="theme-color" content="#12071f">
+  
+  <!-- Google Fonts: Luxury Romantic Serif, Cursive Calligraphy, Modern Clean Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Canvas-Confetti library via lightweight CDN for celebratory blasts -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+  <!-- Ambient Canvas for Floating Hearts, Sparkles & Rose Petals -->
+  <canvas id="ambientCanvas"></canvas>
+
+  <!-- Sound / Music Controller Floating Pill -->
+  <header class="top-nav">
+    <div class="top-nav-content">
+      <div class="brand-badge">
+        <span class="pulse-dot"></span>
+        <span class="badge-text" id="headerTitle">For My Dearest Bestie ✨</span>
+      </div>
+      
+      <button class="music-toggle-btn" id="musicToggle" aria-label="Toggle Romantic Music">
+        <div class="equalizer" id="equalizerBars">
+          <span class="bar bar-1"></span>
+          <span class="bar bar-2"></span>
+          <span class="bar bar-3"></span>
+          <span class="bar bar-4"></span>
+        </div>
+        <span class="music-label" id="musicStatusText">Music: OFF</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile App Wrapper -->
+  <main class="mobile-wrapper" id="mainApp">
+
+    <!-- INTRO ENVELOPE / UNWRAPPING OVERLAY -->
+    <section class="envelope-overlay" id="envelopeOverlay">
+      <div class="envelope-container">
+        <div class="glow-orb"></div>
+        <div class="envelope-box" id="envelopeBox">
+          <div class="envelope-flap" id="envelopeFlap"></div>
+          <div class="envelope-pocket">
+            <div class="wax-seal" id="waxSealBtn">
+              <svg viewBox="0 0 100 100" class="seal-svg">
+                <circle cx="50" cy="50" r="46" fill="#c41e3a" stroke="#f8d57e" stroke-width="3" />
+                <path d="M50 28 C45 20, 30 20, 26 32 C22 45, 50 68, 50 68 C50 68, 78 45, 74 32 C70 20, 55 20, 50 28 Z" fill="#f8d57e" />
+              </svg>
+              <span class="seal-text">TAP TO OPEN</span>
+            </div>
+            <div class="letter-peek">
+              <span class="sparkle-icon">✨</span>
+              <p>A Special Gift Just For You</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="envelope-intro-text">
+          <h2 class="romantic-script-title">Happy Birthday, Beautiful!</h2>
+          <p class="intro-sub">A magical little universe crafted with all my love & sweetest memories 💌</p>
+          <button class="btn-open-gift" id="openGiftBtn">
+            <span class="btn-glow"></span>
+            <span>✨ Unlock Your Birthday Surprise ✨</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="heroSection">
+      <div class="hero-card glass-panel">
+        <!-- Floating Butterfly / Heart Accent -->
+        <div class="floating-badge">
+          <svg class="butterfly-svg" viewBox="0 0 50 50">
+            <path d="M25,25 C15,5 0,10 5,28 C10,40 25,27 25,25 Z" fill="#ff7da7" opacity="0.9" />
+            <path d="M25,25 C35,5 50,10 45,28 C40,40 25,27 25,25 Z" fill="#ff4b8b" opacity="0.9" />
+            <path d="M25,25 C18,32 10,45 20,48 C28,48 25,28 25,25 Z" fill="#f8d57e" opacity="0.85" />
+            <path d="M25,25 C32,32 40,45 30,48 C22,48 25,28 25,25 Z" fill="#f8d57e" opacity="0.85" />
+          </svg>
+          <span>Today is all about YOU</span>
+        </div>
+
+        <h1 class="hero-title">
+          <span class="hero-subtitle">Happy Birthday to My</span>
+          <span class="hero-name-gradient" id="bestieNameDisplay">Precious Bestie</span>
+          <span class="hero-stars">✨ 💖 🌸</span>
+        </h1>
+
+        <div class="hero-avatar-frame">
+          <div class="avatar-glow-ring"></div>
+          <div class="avatar-image-container">
+            <img src="assets/images/bestie_snap_1.jpg" alt="My Beautiful Best Friend" id="heroMainPhoto" class="hero-avatar-img">
+            <div class="avatar-tag">
+              <span class="tag-heart">❤️</span>
+              <span class="tag-text">The Birthday Queen</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="hero-romantic-quote">
+          "In a galaxy of billions, your smile is my favorite constellation. May your special day sparkle as brightly as your beautiful soul!"
+        </p>
+
+        <!-- Personalize Button -->
+        <button class="name-edit-chip" id="nameEditBtn" title="Change Name">
+          <span>👑 Call Her: </span>
+          <strong id="nameChipText">My Bestie</strong>
+          <span class="edit-icon">✏️</span>
+        </button>
+
+        <!-- Live Birthday Countdown / Celebration Ticker -->
+        <div class="countdown-container">
+          <div class="countdown-header">
+            <svg class="crown-svg" viewBox="0 0 24 24" width="18" height="18">
+              <path d="M2 19h20v2H2zM2 5l5 7 5-8 5 8 5-7v12H2z" fill="#f8d57e" />
+            </svg>
+            <span>Celebrate Her Birthday Hour</span>
+          </div>
+          <div class="countdown-grid" id="countdownGrid">
+            <div class="count-box">
+              <span class="count-num" id="countHours">24</span>
+              <span class="count-unit">Hours</span>
+            </div>
+            <div class="count-sep">:</div>
+            <div class="count-box">
+              <span class="count-num" id="countMins">00</span>
+              <span class="count-unit">Mins</span>
+            </div>
+            <div class="count-sep">:</div>
+            <div class="count-box">
+              <span class="count-num" id="countSecs">00</span>
+              <span class="count-unit">Secs</span>
+            </div>
+          </div>
+          <div class="countdown-footer-msg">🎉 Every single second is pure celebration!</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: INTERACTIVE BIRTHDAY CAKE & WISH MAKER -->
+    <section class="cake-section" id="cakeSection">
+      <div class="section-card glass-panel text-center">
+        <div class="section-header-tag">
+          <span class="icon">🎂</span>
+          <span>Make A Magical Wish</span>
+        </div>
+        
+        <h2 class="section-title">Blow The Birthday Candles!</h2>
+        <p class="section-desc">Close your eyes, make the deepest wish in your heart, and tap the flame to blow them out ✨</p>
+
+        <!-- SVG Glowing Birthday Cake -->
+        <div class="cake-display" id="cakeInteractiveArea">
+          <div class="cake-svg-wrapper">
+            <svg viewBox="0 0 300 240" class="birthday-cake-svg" id="birthdayCakeSvg">
+              <!-- Cake Plate -->
+              <ellipse cx="150" cy="215" rx="125" ry="18" fill="rgba(248, 213, 126, 0.4)" stroke="#f8d57e" stroke-width="2" />
+              <ellipse cx="150" cy="210" rx="115" ry="14" fill="#ffffff" opacity="0.25" />
+
+              <!-- Bottom Cake Tier -->
+              <path d="M55,160 C55,195 245,195 245,160 L245,120 C245,155 55,155 55,120 Z" fill="url(#cakeFrostingGrad)" />
+              <ellipse cx="150" cy="120" rx="95" ry="20" fill="#ff7da7" />
+              
+              <!-- Cream Drips Bottom -->
+              <path d="M55,120 Q65,145 75,122 Q85,148 95,120 Q105,150 115,123 Q125,147 135,120 Q145,152 155,122 Q165,146 175,121 Q185,150 195,122 Q205,145 215,120 Q225,148 235,122 Q240,135 245,120" fill="none" stroke="#fff1f5" stroke-width="8" stroke-linecap="round" />
+              
+              <!-- Top Cake Tier -->
+              <path d="M80,120 C80,150 220,150 220,120 L220,80 C220,110 80,110 80,80 Z" fill="url(#cakeTopGrad)" />
+              <ellipse cx="150" cy="80" rx="70" ry="16" fill="#ff9fc2" />
+
+              <!-- Cream Drips Top -->
+              <path d="M80,80 Q92,102 104,82 Q116,104 128,81 Q140,105 152,83 Q164,103 176,81 Q188,104 200,82 Q210,100 220,80" fill="none" stroke="#fff8fb" stroke-width="7" stroke-linecap="round" />
+
+              <!-- Strawberries / Heart Decor on Cake -->
+              <circle cx="105" cy="80" r="6" fill="#e6194b" />
+              <circle cx="130" cy="83" r="6" fill="#e6194b" />
+              <circle cx="150" cy="84" r="7" fill="#ff3366" />
+              <circle cx="170" cy="83" r="6" fill="#e6194b" />
+              <circle cx="195" cy="80" r="6" fill="#e6194b" />
+
+              <!-- Candle 1 (Left) -->
+              <rect x="115" y="42" width="8" height="40" rx="3" fill="url(#candleGrad)" stroke="#f8d57e" stroke-width="1" />
+              <line x1="119" y1="42" x2="119" y2="35" stroke="#333" stroke-width="2" />
+              <!-- Flame 1 -->
+              <g class="candle-flame flame-1" id="flame1">
+                <path d="M119,36 C114,28 114,16 119,10 C124,16 124,28 119,36 Z" fill="#ffcc00" />
+                <path d="M119,34 C116,28 116,19 119,14 C122,19 122,28 119,34 Z" fill="#ff3b00" />
+                <circle cx="119" cy="22" r="12" fill="rgba(255, 204, 0, 0.35)" class="flame-glow" />
+              </g>
+
+              <!-- Candle 2 (Center) -->
+              <rect x="146" y="32" width="8" height="50" rx="3" fill="url(#candleGrad)" stroke="#f8d57e" stroke-width="1" />
+              <line x1="150" y1="32" x2="150" y2="24" stroke="#333" stroke-width="2" />
+              <!-- Flame 2 -->
+              <g class="candle-flame flame-2" id="flame2">
+                <path d="M150,25 C144,16 144,3 150,-3 C156,3 156,16 150,25 Z" fill="#ffcc00" />
+                <path d="M150,23 C146,16 146,6 150,1 C154,6 154,16 150,23 Z" fill="#ff3b00" />
+                <circle cx="150" cy="11" r="14" fill="rgba(255, 204, 0, 0.45)" class="flame-glow" />
+              </g>
+
+              <!-- Candle 3 (Right) -->
+              <rect x="177" y="42" width="8" height="40" rx="3" fill="url(#candleGrad)" stroke="#f8d57e" stroke-width="1" />
+              <line x1="181" y1="42" x2="181" y2="35" stroke="#333" stroke-width="2" />
+              <!-- Flame 3 -->
+              <g class="candle-flame flame-3" id="flame3">
+                <path d="M181,36 C176,28 176,16 181,10 C186,16 186,28 181,36 Z" fill="#ffcc00" />
+                <path d="M181,34 C178,28 178,19 181,14 C184,19 184,28 181,34 Z" fill="#ff3b00" />
+                <circle cx="181" cy="22" r="12" fill="rgba(255, 204, 0, 0.35)" class="flame-glow" />
+              </g>
+
+              <!-- Gradients Definition -->
+              <defs>
+                <linearGradient id="cakeFrostingGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#ff4b8b" />
+                  <stop offset="100%" stop-color="#b81655" />
+                </linearGradient>
+                <linearGradient id="cakeTopGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#ff75a0" />
+                  <stop offset="100%" stop-color="#db2769" />
+                </linearGradient>
+                <linearGradient id="candleGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#fff" />
+                  <stop offset="50%" stop-color="#ffe4ed" />
+                  <stop offset="100%" stop-color="#ffd1e0" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+
+          <!-- Candle Status Banner -->
+          <div class="candle-status-box" id="candleStatusBox">
+            <span class="status-icon" id="candleStatusIcon">🔥</span>
+            <span id="candleStatusMsg">The candles are glowing brightly! Tap below to blow:</span>
+          </div>
+
+          <!-- Blow Candle Button -->
+          <button class="btn-blow-candle" id="blowCandleBtn">
+            <span class="btn-sparkle">✨</span>
+            <span id="blowBtnLabel">💨 Blow Out The Candles!</span>
+            <span class="btn-sparkle">✨</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: PHOTO MEMORIES SCRAPBOOK & POLAROID CAROUSEL -->
+    <section class="gallery-section" id="gallerySection">
+      <div class="section-card glass-panel">
+        <div class="section-header-tag">
+          <span class="icon">📸</span>
+          <span>Our Sweet Memories</span>
+        </div>
+        <h2 class="section-title">A Scrapbook Of Pure Joy</h2>
+        <p class="section-desc">Every smile with you is a moment etched into gold. Swipe through our cherished chapters:</p>
+
+        <!-- Polaroid Deck -->
+        <div class="polaroid-deck" id="polaroidDeck">
+
+          <!-- Polaroid 1 -->
+          <div class="polaroid-card" data-index="0" data-caption="That irreplaceable smile that lights up any dark room ✨">
+            <div class="tape-strip"></div>
+            <div class="polaroid-photo-frame">
+              <img src="assets/images/bestie_snap_1.jpg" alt="My Bestie Memory 1" loading="lazy">
+              <div class="photo-overlay-shine"></div>
+            </div>
+            <div class="polaroid-caption">
+              <p>Radiance in human form 💖</p>
+              <span class="polaroid-date">Forever & Always</span>
+            </div>
+          </div>
+
+          <!-- Polaroid 2 -->
+          <div class="polaroid-card" data-index="1" data-caption="Unfiltered laughter and late-night heart-to-hearts 🌙">
+            <div class="tape-strip"></div>
+            <div class="polaroid-photo-frame">
+              <img src="assets/images/bestie_snap_2.jpg" alt="My Bestie Memory 2" loading="lazy">
+              <div class="photo-overlay-shine"></div>
+            </div>
+            <div class="polaroid-caption">
+              <p>Pure unfiltered vibes 🌸</p>
+              <span class="polaroid-date">Sweet Chapters</span>
+            </div>
+          </div>
+
+          <!-- Polaroid 3 -->
+          <div class="polaroid-card" data-index="2" data-caption="The one person who knows my wildest dreams and silliness! 💫">
+            <div class="tape-strip"></div>
+            <div class="polaroid-photo-frame">
+              <img src="assets/images/bestie_snap_3.jpg" alt="My Bestie Memory 3" loading="lazy">
+              <div class="photo-overlay-shine"></div>
+            </div>
+            <div class="polaroid-caption">
+              <p>Partners in every crime 🙈</p>
+              <span class="polaroid-date">Unbreakable Bond</span>
+            </div>
+          </div>
+
+          <!-- Polaroid 4 -->
+          <div class="polaroid-card" data-index="3" data-caption="Glow like nobody else can. Simply stunning 🌟">
+            <div class="tape-strip"></div>
+            <div class="polaroid-photo-frame">
+              <img src="assets/images/bestie_snap_4.jpg" alt="My Bestie Memory 4" loading="lazy">
+              <div class="photo-overlay-shine"></div>
+            </div>
+            <div class="polaroid-caption">
+              <p>Golden soul, angel face 👑</p>
+              <span class="polaroid-date">Memories We Cherish</span>
+            </div>
+          </div>
+
+          <!-- Polaroid 5 -->
+          <div class="polaroid-card" data-index="4" data-caption="Candid perfection. Every picture tells an unforgettable story!">
+            <div class="tape-strip"></div>
+            <div class="polaroid-photo-frame">
+              <img src="assets/images/bestie_snap_5.jpg" alt="My Bestie Memory 5" loading="lazy">
+              <div class="photo-overlay-shine"></div>
+            </div>
+            <div class="polaroid-caption">
+              <p>My comfort person 🤍</p>
+              <span class="polaroid-date">Infinite Love</span>
+            </div>
+          </div>
+
+          <!-- Polaroid 6: Memory Classic -->
+          <div class="polaroid-card" data-index="5" data-caption="Every adventure with you turns into a lifetime treasure.">
+            <div class="tape-strip"></div>
+            <div class="polaroid-photo-frame">
+              <img src="assets/images/memory_2022_main.jpg" alt="My Bestie Memory 6" loading="lazy">
+              <div class="photo-overlay-shine"></div>
+            </div>
+            <div class="polaroid-caption">
+              <p>Timeless milestone moments 🌺</p>
+              <span class="polaroid-date">Special Day</span>
+            </div>
+          </div>
+
+          <!-- Polaroid 7 -->
+          <div class="polaroid-card" data-index="6" data-caption="Night talks and sweet confidences under the stars ✨">
+            <div class="tape-strip"></div>
+            <div class="polaroid-photo-frame">
+              <img src="assets/images/memory_night.jpg" alt="My Bestie Memory 7" loading="lazy">
+              <div class="photo-overlay-shine"></div>
+            </div>
+            <div class="polaroid-caption">
+              <p>Starlit conversations 🌌</p>
+              <span class="polaroid-date">Heart to Heart</span>
+            </div>
+          </div>
+
+          <!-- Polaroid 8 -->
+          <div class="polaroid-card" data-index="7" data-caption="Sunlit mornings & effortless happiness with my favorite person!">
+            <div class="tape-strip"></div>
+            <div class="polaroid-photo-frame">
+              <img src="assets/images/memory_fun.jpg" alt="My Bestie Memory 8" loading="lazy">
+              <div class="photo-overlay-shine"></div>
+            </div>
+            <div class="polaroid-caption">
+              <p>Joyful memories together 🌺</p>
+              <span class="polaroid-date">Precious Times</span>
+            </div>
+          </div>
+
+          <!-- Polaroid 9 (New Image) -->
+          <div class="polaroid-card" data-index="8" data-caption="Cherished moments that will always hold a piece of my heart 🌹">
+            <div class="tape-strip"></div>
+            <div class="polaroid-photo-frame">
+              <img src="assets/images/IMG-20220207-WA0017.jpg" alt="My Bestie Memory 9" loading="lazy">
+              <div class="photo-overlay-shine"></div>
+            </div>
+            <div class="polaroid-caption">
+              <p>Forever by your side 💫</p>
+              <span class="polaroid-date">Sweet Nostalgia</span>
+            </div>
+          </div>
+
+          <!-- Polaroid 10 (New Image) -->
+          <div class="polaroid-card" data-index="9" data-caption="That glowing, beautiful energy you bring everywhere you go ✨">
+            <div class="tape-strip"></div>
+            <div class="polaroid-photo-frame">
+              <img src="assets/images/IMG_20250920_201259_790.jpg" alt="My Bestie Memory 10" loading="lazy">
+              <div class="photo-overlay-shine"></div>
+            </div>
+            <div class="polaroid-caption">
+              <p>Stunning Birthday Queen 👑</p>
+              <span class="polaroid-date">Pure Elegance</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="gallery-hint">
+          <span>👈 Swipe or tap any photo for full romance view 👉</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: SPECIAL VIDEO MEMORY REEL -->
+    <section class="video-section" id="videoSection">
+      <div class="section-card glass-panel">
+        <div class="section-header-tag">
+          <span class="icon">🎬</span>
+          <span>Motion Memory</span>
+        </div>
+        <h2 class="section-title">Live In The Moment</h2>
+        <p class="section-desc">A little snapshot of our world moving together in time 💕</p>
+
+        <div class="video-player-container">
+          <div class="video-glowing-border">
+            <video id="bestieVideo" class="bestie-video" playsinline preload="metadata" controls poster="assets/images/bestie_snap_1.jpg">
+              <source src="assets/video/bestie_memory.mp4" type="video/mp4">
+              Your browser does not support the video player.
+            </video>
+          </div>
+          <div class="video-caption-bar">
+            <span class="video-heart-badge">💖 Captured Moments</span>
+            <span class="video-sub">Tap play to relive our sweet memory</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: THE ROMANTIC BESTIE LOVE LETTER -->
+    <section class="letter-section" id="letterSection">
+      <div class="parchment-card" id="parchmentCard">
+        <div class="parchment-seal-decor">
+          <svg viewBox="0 0 60 60" class="mini-seal-svg">
+            <circle cx="30" cy="30" r="26" fill="#c41e3a" stroke="#f8d57e" stroke-width="2" />
+            <path d="M30 18 C27 13, 18 13, 15 20 C12 28, 30 42, 30 42 C30 42, 48 28, 45 20 C42 13, 33 13, 30 18 Z" fill="#f8d57e" />
+          </svg>
+        </div>
+
+        <div class="letter-header">
+          <span class="letter-eyebrow">To My Favorite Human Being</span>
+          <h2 class="letter-title">Dearest <span class="letter-name-slot">Bestie</span>,</h2>
+        </div>
+
+        <div class="letter-body">
+          <p class="letter-p">
+            On this day, the world became a softer, brighter, and infinitely more beautiful place because you were born. Having you in my life isn't just a blessing—it is my absolute favorite adventure.
+          </p>
+          <p class="letter-p">
+            Thank you for being my safe space when the world feels overwhelming, my partner in uncontrollable laughter, and the only person who can understand what I’m thinking with just one look. You have a heart of pure gold, and your kindness touches everyone lucky enough to know you.
+          </p>
+          <p class="letter-p">
+            I hope this new year of your life gives you everything you’ve secretly wished for: endless happiness, romantic sunsets, dream trips, belly-hurting laughs, and all the love this universe can hold.
+          </p>
+          <p class="letter-p highlight-romantic">
+            "No matter how many miles, no matter how many years—you will always have a permanent home in my heart."
+          </p>
+        </div>
+
+        <div class="letter-signature">
+          <div class="signature-line">With All My Love & Best Wishes,</div>
+          <div class="signature-name">Your Best Friend Forever 💖</div>
+          <div class="signature-date">Birthday Edition ✨</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: "OPEN WHEN..." EMOTIONAL CAPSULES -->
+    <section class="capsules-section" id="capsulesSection">
+      <div class="section-card glass-panel">
+        <div class="section-header-tag">
+          <span class="icon">💌</span>
+          <span>Heart Capsules</span>
+        </div>
+        <h2 class="section-title">Open When...</h2>
+        <p class="section-desc">Tap any envelope to open a secret personal note meant just for that exact moment ✨</p>
+
+        <div class="capsules-grid">
+
+          <!-- Capsule 1 -->
+          <div class="capsule-card" data-capsule="1">
+            <div class="capsule-inner">
+              <div class="capsule-front">
+                <span class="capsule-badge">💌 Note #1</span>
+                <div class="capsule-icon">🥺</div>
+                <h3>Open when you miss me</h3>
+                <span class="tap-hint">Tap to flip 💫</span>
+              </div>
+              <div class="capsule-back">
+                <div class="back-heart">💖</div>
+                <h4>I'm Always Here</h4>
+                <p>Never forget that distance means nothing when someone means everything. I'm always just one text or call away, ready to listen to anything you want to say.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Capsule 2 -->
+          <div class="capsule-card" data-capsule="2">
+            <div class="capsule-inner">
+              <div class="capsule-front">
+                <span class="capsule-badge">💌 Note #2</span>
+                <div class="capsule-icon">🌸</div>
+                <h3>Open when you need a smile</h3>
+                <span class="tap-hint">Tap to flip 💫</span>
+              </div>
+              <div class="capsule-back">
+                <div class="back-heart">✨</div>
+                <h4>You Are Gorgeous!</h4>
+                <p>Remember that you have the most infectious, adorable laugh on this planet. Wear your smile proudly because you genuinely brighten everyone's entire day!</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Capsule 3 -->
+          <div class="capsule-card" data-capsule="3">
+            <div class="capsule-inner">
+              <div class="capsule-front">
+                <span class="capsule-badge">💌 Note #3</span>
+                <div class="capsule-icon">💪</div>
+                <h3>Open when you doubt yourself</h3>
+                <span class="tap-hint">Tap to flip 💫</span>
+              </div>
+              <div class="capsule-back">
+                <div class="back-heart">👑</div>
+                <h4>You've Got This</h4>
+                <p>You are stronger, smarter, and more capable than you realize. Whatever obstacle is in front of you, you will conquer it like the queen you are!</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Capsule 4 -->
+          <div class="capsule-card" data-capsule="4">
+            <div class="capsule-inner">
+              <div class="capsule-front">
+                <span class="capsule-badge">💌 Note #4</span>
+                <div class="capsule-icon">🎂</div>
+                <h3>Open for your Birthday Wish</h3>
+                <span class="tap-hint">Tap to flip 💫</span>
+              </div>
+              <div class="capsule-back">
+                <div class="back-heart">🎉</div>
+                <h4>My Biggest Wish For You</h4>
+                <p>May the universe spoil you with boundless joy, peaceful nights, exciting mornings, and may every dream you whisper come true this year!</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: JAR OF INFINITE REASONS I ADORE YOU (INTERACTIVE GENERATOR) -->
+    <section class="reasons-section" id="reasonsSection">
+      <div class="section-card glass-panel text-center">
+        <div class="section-header-tag">
+          <span class="icon">✨</span>
+          <span>Infinite Love Jar</span>
+        </div>
+        <h2 class="section-title">Reasons Why You're Special</h2>
+        <p class="section-desc">Whenever you want a reminder of how extraordinary you are, tap the magic crystal heart below:</p>
+
+        <div class="jar-interactive-box">
+          <div class="crystal-heart-btn" id="generateReasonBtn">
+            <div class="heart-pulse-glow"></div>
+            <svg viewBox="0 0 100 100" class="giant-heart-svg">
+              <path d="M50,85 C50,85 15,58 15,35 C15,20 27,12 38,12 C44,12 48,16 50,20 C52,16 56,12 62,12 C73,12 85,20 85,35 C85,58 50,85 50,85 Z" fill="url(#crystalHeartGrad)" filter="drop-shadow(0 10px 20px rgba(255, 75, 139, 0.6))" />
+              <path d="M30,22 Q40,18 45,26" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.8" />
+              <defs>
+                <linearGradient id="crystalHeartGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#ff9fc2" />
+                  <stop offset="50%" stop-color="#ff4b8b" />
+                  <stop offset="100%" stop-color="#c41e3a" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <span class="tap-heart-text">TAP ME FOR LOVE 💕</span>
+          </div>
+
+          <!-- Dynamic Reason Display Card -->
+          <div class="reason-result-card" id="reasonCard">
+            <div class="reason-quote-icon">“</div>
+            <p class="reason-text" id="reasonText">You make ordinary days feel like a celebration just by being in them.</p>
+            <div class="reason-counter" id="reasonCounter">Reason #1 of 30+</div>
+          </div>
+
+          <button class="btn-another-reason" id="anotherReasonBtn">
+            <span>✨ Tap for Another Sweet Truth ✨</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: SWEET BESTIE PLAYLIST & VIBES -->
+    <section class="playlist-section" id="playlistSection">
+      <div class="section-card glass-panel">
+        <div class="section-header-tag">
+          <span class="icon">🎵</span>
+          <span>Our Vibe Tracklist</span>
+        </div>
+        <h2 class="section-title">Songs That Feel Like You</h2>
+        <p class="section-desc">A little acoustic playlist composed to set the romantic birthday ambiance:</p>
+
+        <div class="tracklist">
+          <div class="track-item active" data-track="0">
+            <div class="track-play-icon">▶</div>
+            <div class="track-info">
+              <div class="track-name">Romantic Melodic Chimes (Live Synth)</div>
+              <div class="track-artist">Acoustic Kalimba & Warm Piano Chords</div>
+            </div>
+            <span class="track-status">Playing 💖</span>
+          </div>
+
+          <div class="track-item" data-track="1">
+            <div class="track-play-icon">♪</div>
+            <div class="track-info">
+              <div class="track-name">Golden Birthday Lullaby</div>
+              <div class="track-artist">Soft Starlight Harmonies</div>
+            </div>
+            <span class="track-status">Romantic</span>
+          </div>
+
+          <div class="track-item" data-track="2">
+            <div class="track-play-icon">♪</div>
+            <div class="track-info">
+              <div class="track-name">Canon of Friendship</div>
+              <div class="track-artist">Sweet Strings & Emotional Bells</div>
+            </div>
+            <span class="track-status">Cherished</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER / FINAL TENDER WISH -->
+    <footer class="romantic-footer">
+      <div class="footer-decor">
+        <span class="footer-heart">💖</span>
+        <span class="footer-sparkle">✨</span>
+        <span class="footer-rose">🌹</span>
+      </div>
+      <h3 class="footer-heading">Happiest Birthday, My Angel!</h3>
+      <p class="footer-text">Built with all the adoration and love in the world for my best friend. May today be the start of your happiest chapter yet.</p>
+      
+      <div class="footer-signature-badge">
+        <span>Made Just For You • Forever & Always</span>
+      </div>
+
+      <button class="btn-scroll-top" id="scrollTopBtn">
+        <span>↑ Back To Top 🌸</span>
+      </button>
+    </footer>
+
+    <!-- FLOATING QUICK ACTIONS BAR (MOBILE FIXED BOTTOM) -->
+    <div class="floating-action-bar">
+      <button class="float-btn float-hug-btn" id="sendHugBtn" aria-label="Send Warm Hug">
+        <span class="btn-icon">🤗</span>
+        <span class="btn-text">Send Hug</span>
+      </button>
+
+      <button class="float-btn float-love-btn" id="sendLoveBtn" aria-label="Shower Hearts">
+        <span class="btn-icon">💖</span>
+        <span class="btn-text">Shower Love</span>
+      </button>
+
+      <button class="float-btn float-wish-btn" id="sendSparklesBtn" aria-label="Magic Sparkles">
+        <span class="btn-icon">✨</span>
+        <span class="btn-text">Make Wish</span>
+      </button>
+    </div>
+
+  </main>
+
+  <!-- MODAL: PHOTO ENLARGED VIEW -->
+  <div class="modal-backdrop" id="photoModal">
+    <div class="modal-box">
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close photo view">✕</button>
+      <div class="modal-img-wrap">
+        <img src="" alt="Enlarged photo" id="modalImg">
+      </div>
+      <div class="modal-caption-box">
+        <p id="modalCaptionText">Capturing the sweetest moments...</p>
+      </div>
+      <div class="modal-nav">
+        <button class="modal-nav-btn" id="modalPrevBtn">‹ Prev</button>
+        <span class="modal-counter" id="modalCounter">1 / 8</span>
+        <button class="modal-nav-btn" id="modalNextBtn">Next ›</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: WISH UNLOCKED CELEBRATION -->
+  <div class="modal-backdrop" id="wishModal">
+    <div class="modal-box wish-modal-box">
+      <div class="wish-modal-crown">👑</div>
+      <h2 class="wish-modal-title">Your Wish Is Flying To The Stars! ✨</h2>
+      <p class="wish-modal-desc">
+        May every blessing, every dream, and all the love you give to the world return to you multiplied a thousand times today.
+      </p>
+      <div class="wish-modal-cake-icon">🎂 🥂 💖 🌸</div>
+      <button class="btn-close-wish" id="closeWishModalBtn">
+        <span>Thank You! Keep Celebrating 🥳</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL: PERSONALIZE NAME -->
+  <div class="modal-backdrop" id="nameModal">
+    <div class="modal-box name-modal-box">
+      <h3 class="name-modal-title">Personalize Your Bestie's Name 👑</h3>
+      <p class="name-modal-sub">Enter her name or sweet nickname to customize the whole website:</p>
+      <input type="text" id="bestieNameInput" class="name-input" placeholder="e.g. Pari, Cutie, Angel, Simran..." maxlength="25">
+      <div class="name-modal-actions">
+        <button class="btn-cancel-name" id="cancelNameBtn">Cancel</button>
+        <button class="btn-save-name" id="saveNameBtn">Save & Glow ✨</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript Logic -->
+  <script src="script.js"></script>
+</body>
+</html>
