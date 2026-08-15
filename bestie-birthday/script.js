@@ -27,6 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
     { src: 'assets/images/memory_fun.jpg', caption: 'Joyful memories and effortless happiness with my favorite person! 🌺' },
     { src: 'assets/images/IMG-20220207-WA0017.jpg', caption: 'Cherished moments that will always hold a piece of my heart 🌹' },
     { src: 'assets/images/IMG_20250920_201259_790.jpg', caption: 'That glowing, beautiful energy you bring everywhere you go 👑' },
+    { src: 'assets/images/bestie_snap_11.jpg', caption: 'Your style, elegance, and pure grace light up the world ✨' },
+    { src: 'assets/images/bestie_wa_1.jpg', caption: 'Unforgettable smiles and sweet everyday adventures 🌸' },
+    { src: 'assets/images/bestie_wa_2.jpg', caption: 'Two souls destined to laugh together forever 💕' },
+    { src: 'assets/images/bestie_wa_3.jpg', caption: 'The brightest sparkle in the whole room, always! 🥂' },
   ];
 
   // 35 Romantic & Heartfelt Reasons
